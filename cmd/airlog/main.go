@@ -6,6 +6,12 @@ import (
 )
 
 func main() {
-	con := di.Container{}
-	fmt.Println(con)
+	dc := di.Container{}
+
+	g := dc.Gin()
+	port := dc.Config().Port
+
+	if err := g.Run(fmt.Sprintf(":%s", port)); err != nil {
+		panic(err)
+	}
 }
