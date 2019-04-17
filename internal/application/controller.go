@@ -7,8 +7,8 @@ import (
 )
 
 type PostController struct {
-	Service domain.PostService
-	View    *View
+	Service        domain.PostService
+	ViewRepository *ViewRepository
 }
 
 func (pc *PostController) Get(ctx *gin.Context) {
@@ -21,10 +21,5 @@ func (pc *PostController) Get(ctx *gin.Context) {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
-	html, err := pc.View.RenderPost(post)
-	if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
-		return
-	}
-	ctx.String(http.StatusOK, html)
+	ctx.Render(http.StatusOK, pc.ViewRepository.Post(post))
 }

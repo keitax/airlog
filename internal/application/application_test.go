@@ -27,8 +27,8 @@ var _ = Describe("application", func() {
 		c = gomock.NewController(GinkgoT())
 		mpsvc = domain.NewMockPostService(c)
 		gineng = application.SetupGin(&application.PostController{
-			Service: mpsvc,
-			View:    &application.View{},
+			Service:        mpsvc,
+			ViewRepository: &application.ViewRepository{},
 		})
 		resrec = httptest.NewRecorder()
 	})

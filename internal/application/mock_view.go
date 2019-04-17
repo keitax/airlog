@@ -10,7 +10,7 @@ import (
 	reflect "reflect"
 )
 
-// MockView is a mock of View interface
+// MockView is a mock of ViewRepository interface
 type MockView struct {
 	ctrl     *gomock.Controller
 	recorder *MockViewMockRecorder

@@ -1,21 +1,36 @@
 package application
 
 import (
-	"bytes"
 	"github.com/keitax/airlog/internal/domain"
 	"html/template"
+	"net/http"
 )
 
-type View struct{}
+type View struct {
+	TemplatePath string
+	Data         interface{}
+}
 
-func (v *View) RenderPost(post *domain.Post) (string, error) {
+func (v *View) Render(w http.ResponseWriter) error {
 	t, err := template.ParseFiles("templates/post.tmpl")
 	if err != nil {
-		return "", err
+		return err
 	}
-	buf := &bytes.Buffer{}
-	if err := t.Execute(buf, map[string]string{}); err != nil {
-		return "", err
+	if err := t.Execute(w, map[string]string{}); err != nil {
+		return err
 	}
-	return buf.String(), nil
+	return nil
+}
+
+func (v *View) WriteContentType(w http.ResponseWriter) {
+	w.Header()["Content-Type"] = []string{"text/html"}
+}
+
+type ViewRepository struct{}
+
+func (v *ViewRepository) Post(post *domain.Post) *View {
+	return &View{
+		TemplatePath: "templates/post.tmpl",
+		Data:         map[string]string{},
+	}
 }
