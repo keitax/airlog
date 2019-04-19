@@ -9,18 +9,30 @@ import (
 	. "github.com/onsi/gomega"
 	"net/http"
 	"net/http/httptest"
+	"os"
 )
 
 var _ = Describe("application", func() {
 	var (
-		c      *gomock.Controller
-		mpsvc  *domain.MockPostService
-		gineng *gin.Engine
-		resrec *httptest.ResponseRecorder
+		c       *gomock.Controller
+		mpsvc   *domain.MockPostService
+		gineng  *gin.Engine
+		resrec  *httptest.ResponseRecorder
+		origDir string
 	)
 
 	BeforeEach(func() {
 		gin.SetMode(gin.ReleaseMode)
+		var err error
+		origDir, err = os.Getwd()
+		if err != nil {
+			panic(err)
+		}
+		os.Chdir("../..") // To read static and templates directories
+	})
+
+	AfterEach(func() {
+		os.Chdir(origDir)
 	})
 
 	BeforeEach(func() {
