@@ -19,7 +19,7 @@ func (c Container) Gin() *gin.Engine {
 func (c Container) PostController() *application.PostController {
 	return &application.PostController{
 		Service:        c.PostService(),
-		ViewRepository: c.View(),
+		ViewRepository: c.ViewRepository(),
 	}
 }
 
@@ -33,8 +33,10 @@ func (c Container) PostRepository() domain.PostRepository {
 	return &rds.PostRepository{}
 }
 
-func (c Container) View() *application.ViewRepository {
-	return &application.ViewRepository{}
+func (c Container) ViewRepository() *application.ViewRepository {
+	return &application.ViewRepository{
+		SiteTitle: c.Config().SiteTitle,
+	}
 }
 
 func (c Container) Config() *application.Config {
