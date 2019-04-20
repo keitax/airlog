@@ -5,6 +5,7 @@ import (
 	"github.com/keitax/airlog/internal/application"
 	"github.com/keitax/airlog/internal/domain"
 	"github.com/keitax/airlog/internal/infrastructure/osenv"
+	"github.com/keitax/airlog/internal/infrastructure/rds"
 )
 
 type Container struct{}
@@ -23,7 +24,13 @@ func (c Container) PostController() *application.PostController {
 }
 
 func (c Container) PostService() domain.PostService {
-	return &domain.PostServiceImpl{}
+	return &domain.PostServiceImpl{
+		Repository: c.PostRepository(),
+	}
+}
+
+func (c Container) PostRepository() domain.PostRepository {
+	return &rds.PostRepository{}
 }
 
 func (c Container) View() *application.ViewRepository {
