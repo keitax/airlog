@@ -1,5 +1,6 @@
 package application
 
 type Config struct {
-	Port string
+	Port      string
+	SiteTitle string
 }
