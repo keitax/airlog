@@ -52,6 +52,7 @@ var _ = Describe("application", func() {
 					&domain.Post{
 						Filename: "20190101-title.md",
 						Title:    "Title",
+						Body: "# Title",
 					},
 					nil,
 				)
@@ -64,7 +65,7 @@ var _ = Describe("application", func() {
 
 				It("renders a post page", func() {
 					Expect(resrec.Result().StatusCode).To(Equal(http.StatusOK))
-					Expect(resrec.Body.String()).To(ContainSubstring("<h1>airlog</h1>"))
+					Expect(resrec.Body.String()).To(ContainSubstring("<h1>Title</h1>"))
 				})
 			})
 		})
