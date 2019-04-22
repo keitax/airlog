@@ -1,1 +1,61 @@
 @import "/assets/normalize.css";
+
+body {
+    font-family: sans-serif;
+    font-size: 13pt;
+    color: #333;
+}
+
+@media only screen and (min-width: 40rem) {
+    .container > * {
+        width: 40rem;
+        margin: auto;
+    }
+}
+
+@media only screen and (max-width: 40rem) {
+    .container > * {
+        width: 90%;
+    }
+
+    html {
+        font-size: 90%;
+    }
+}
+
+.container {
+}
+
+.site-header {
+    border-bottom: 1pt #ccc solid;
+}
+
+.site-title {
+    font-size: 17pt;
+    color: #039;
+    margin: 1rem 1.6rem;
+}
+
+.post {
+    line-height: 1.6;
+    margin-bottom: 3rem;
+}
+
+.post h1 {
+    color: #666;
+    font-size: xx-large;
+    margin: 2rem 0;
+}
+
+.post p {
+    margin-bottom: 1rem;
+}
+
+.post h2 {
+    font-size: larger;
+    margin: 2rem 0 1rem;
+}
+
+.post h3 {
+    font-size: medium;
+}

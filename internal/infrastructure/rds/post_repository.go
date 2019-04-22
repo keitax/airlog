@@ -10,12 +10,17 @@ func (repo *PostRepository) Filename(filename string) (*domain.Post, error) {
 		Filename: filename,
 		Hash:     "xxx",
 		Title:    "Title",
-		Body: `# Title
+		Body: `# Airlog
 
-## First post
+## h2
 
-Hello airlog!
-`,
+hello world
+
+- a
+- b
+- c
+
+### h3`,
 	}, nil
 }
 
