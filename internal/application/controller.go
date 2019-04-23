@@ -3,7 +3,6 @@ package application
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/keitax/airlog/internal/domain"
-	"log"
 	"net/http"
 )
 
@@ -22,8 +21,5 @@ func (pc *PostController) Get(ctx *gin.Context) {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
-
-	log.Printf("title %s", post.Title)
-
 	ctx.Render(http.StatusOK, pc.ViewRepository.Post(post))
 }
