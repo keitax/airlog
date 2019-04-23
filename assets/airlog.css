@@ -3,17 +3,18 @@
 body {
     font-family: sans-serif;
     font-size: 13pt;
-    color: #333;
+    padding: 0;
 }
 
-@media only screen and (min-width: 40rem) {
+@media only screen and (min-width: 50rem) {
     .container > * {
-        width: 40rem;
+        width: 50rem;
         margin: auto;
+        margin-left: 1.6rem;
     }
 }
 
-@media only screen and (max-width: 40rem) {
+@media only screen and (max-width: 50rem) {
     .container > * {
         width: 90%;
     }
@@ -27,24 +28,27 @@ body {
 }
 
 .site-header {
-    border-bottom: 1pt #ccc solid;
+    background: #eee;
+    padding: 1rem 1.6rem;
+    border-bottom: solid 1pt #ccc;
 }
 
 .site-title {
     font-size: 17pt;
-    color: #039;
-    margin: 1rem 1.6rem;
+    color: #369;
+    margin: 0;
 }
 
 .post {
     line-height: 1.6;
     margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1pt #ccc solid;
 }
 
 .post h1 {
-    color: #666;
-    font-size: xx-large;
-    margin: 2rem 0;
+    font-size: x-large;
+    margin: 3rem 0 2rem;
 }
 
 .post p {
@@ -57,5 +61,6 @@ body {
 }
 
 .post h3 {
+    color: #666;
     font-size: medium;
 }
