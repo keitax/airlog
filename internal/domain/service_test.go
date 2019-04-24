@@ -43,4 +43,24 @@ var _ = Describe("Service", func() {
 			})
 		})
 	})
+
+	Describe("Recent()", func() {
+		Context("when posts are available", func() {
+			BeforeEach(func() {
+				mrepo.EXPECT().All().AnyTimes().Return([]*domain.Post{
+					{Filename: "20190102-bar.md"},
+					{Filename: "20190101-foo.md"},
+				}, nil)
+			})
+
+			It("gets the posts", func() {
+				got, err := service.Recent()
+				Expect(err).NotTo(HaveOccurred())
+				Expect(got).To(Equal([]*domain.Post{
+					{Filename: "20190102-bar.md"},
+					{Filename: "20190101-foo.md"},
+				}))
+			})
+		})
+	})
 })

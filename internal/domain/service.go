@@ -8,6 +8,7 @@ import (
 
 type PostService interface {
 	GetByHTMLFilename(filename string) (*Post, error)
+	Recent() ([]*Post, error)
 }
 
 type PostServiceImpl struct {
@@ -21,4 +22,12 @@ func (ps *PostServiceImpl) GetByHTMLFilename(filename string) (*Post, error) {
 		return nil, err
 	}
 	return p, nil
+}
+
+func (ps *PostServiceImpl) Recent() ([]*Post, error) {
+	recent, err := ps.Repository.All()
+	if err != nil {
+		return nil, err
+	}
+	return recent, nil
 }
