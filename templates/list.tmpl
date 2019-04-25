@@ -1,19 +1,9 @@
-<!doctype html>
-<head>
-    <link rel="stylesheet" href="/assets/airlog.css">
-    <meta name=viewport content="width=device-width, initial-scale=1">
-</head>
-<body>
-<header class="site-header">
-    <h1 class="site-title"><a href="/">{{.siteTitle}}</a></h1>
-</header>
-<div class="container">
-    <ul class="post-list">
-        {{range .posts}}
-            <li class="post-list__item">
-                <a href="{{. | GetPostURL}}">{{.Title}}</a>
-            </li>
-        {{end}}
-    </ul>
-</div>
-</body>
+{{template "header.tmpl" . -}}
+<ul class="post-list">
+    {{range .posts}}
+        <li class="post-list__item">
+            <a href="{{. | GetPostURL}}">{{.Title}}</a>
+        </li>
+    {{end}}
+</ul>
+{{template "footer.tmpl" . -}}

@@ -5,6 +5,7 @@ import (
 	"github.com/keitax/airlog/internal/domain"
 	"html/template"
 	"net/http"
+	"path/filepath"
 	"strings"
 )
 
@@ -14,9 +15,13 @@ type View struct {
 }
 
 func (v *View) Render(w http.ResponseWriter) error {
+	fs, err := filepath.Glob("templates/*.tmpl")
+	if err != nil {
+		return err
+	}
 	t, err := template.New("root").Funcs(template.FuncMap{
 		"GetPostURL": GetPostURL,
-	}).ParseFiles(v.TemplatePath)
+	}).ParseFiles(fs...)
 	if err != nil {
 		return err
 	}
