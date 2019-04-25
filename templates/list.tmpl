@@ -11,7 +11,7 @@
     <ul class="post-list">
 {{range .posts}}
     <li class="post-list__item">
-        {{.Title}}
+        <a href="{{. | GetPostURL}}">{{.Title}}</a>
     </li>
 {{end}}
     </ul>

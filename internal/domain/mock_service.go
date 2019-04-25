@@ -44,3 +44,16 @@ func (m *MockPostService) GetByHTMLFilename(filename string) (*Post, error) {
 func (mr *MockPostServiceMockRecorder) GetByHTMLFilename(filename interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByHTMLFilename", reflect.TypeOf((*MockPostService)(nil).GetByHTMLFilename), filename)
 }
+
+// Recent mocks base method
+func (m *MockPostService) Recent() ([]*Post, error) {
+	ret := m.ctrl.Call(m, "Recent")
+	ret0, _ := ret[0].([]*Post)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Recent indicates an expected call of Recent
+func (mr *MockPostServiceMockRecorder) Recent() *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recent", reflect.TypeOf((*MockPostService)(nil).Recent))
+}
