@@ -5,15 +5,15 @@
 </head>
 <body>
 <header class="site-header">
-    <h1 class="site-title">{{.siteTitle}}</h1>
+    <h1 class="site-title"><a href="/">{{.siteTitle}}</a></h1>
 </header>
 <div class="container">
     <ul class="post-list">
-{{range .posts}}
-    <li class="post-list__item">
-        <a href="{{. | GetPostURL}}">{{.Title}}</a>
-    </li>
-{{end}}
+        {{range .posts}}
+            <li class="post-list__item">
+                <a href="{{. | GetPostURL}}">{{.Title}}</a>
+            </li>
+        {{end}}
     </ul>
 </div>
 </body>
