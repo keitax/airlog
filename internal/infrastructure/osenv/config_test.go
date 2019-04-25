@@ -16,6 +16,7 @@ var _ = Describe("Config", func() {
 			env := map[string]string{
 				"PORT":          "3000",
 				"AL_SITE_TITLE": "Airlog",
+				"AL_FOOTNOTE":   "footnote",
 			}
 
 			BeforeEach(func() {
@@ -36,6 +37,7 @@ var _ = Describe("Config", func() {
 				Expect(conf).To(Equal(&application.Config{
 					Port:      "3000",
 					SiteTitle: "Airlog",
+					Footnote:  "footnote",
 				}))
 			})
 		})
