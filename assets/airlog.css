@@ -64,3 +64,13 @@ body {
     color: #666;
     font-size: medium;
 }
+
+.post-list {
+    padding: 0;
+}
+
+.post-list__item {
+    list-style-type: none;
+    font-size: large;
+    margin: 2rem 0;
+}

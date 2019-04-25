@@ -1,6 +1,8 @@
 package rds
 
-import "github.com/keitax/airlog/internal/domain"
+import (
+	"github.com/keitax/airlog/internal/domain"
+)
 
 type PostRepository struct {
 }
@@ -25,5 +27,8 @@ hello world
 }
 
 func (repo *PostRepository) All() ([]*domain.Post, error) {
-	return nil, nil
+	return []*domain.Post{
+		{Filename: "20190101-b.md", Title: "Second post"},
+		{Filename: "20190101-a.md", Title: "First post"},
+	}, nil
 }

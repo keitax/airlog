@@ -11,7 +11,7 @@ type View struct {
 }
 
 func (v *View) Render(w http.ResponseWriter) error {
-	t, err := template.ParseFiles("templates/post.tmpl")
+	t, err := template.ParseFiles(v.TemplatePath)
 	if err != nil {
 		return err
 	}

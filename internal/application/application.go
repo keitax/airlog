@@ -7,6 +7,7 @@ import (
 
 func SetupGin(controller *PostController) *gin.Engine {
 	g := gin.New()
+	g.GET("/", controller.List)
 	g.GET("/:basePath", controller.Get)
 	fs := http.FileServer(http.Dir("assets"))
 	g.GET("/:basePath/:filename", func(ctx *gin.Context) {

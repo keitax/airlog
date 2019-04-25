@@ -9,7 +9,11 @@
 </header>
 <div class="container">
     <ul class="post-list">
-
+{{range .posts}}
+    <li class="post-list__item">
+        {{.Title}}
+    </li>
+{{end}}
     </ul>
 </div>
 </body>

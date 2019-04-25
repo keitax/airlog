@@ -23,3 +23,12 @@ func (pc *PostController) Get(ctx *gin.Context) {
 	}
 	ctx.Render(http.StatusOK, pc.ViewRepository.Post(post))
 }
+
+func (pc *PostController) List(ctx *gin.Context) {
+	posts, err := pc.Service.Recent()
+	if err != nil {
+		ctx.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+	ctx.Render(http.StatusOK, pc.ViewRepository.List(posts))
+}
