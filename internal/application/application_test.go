@@ -45,6 +45,19 @@ var _ = Describe("application", func() {
 		resrec = httptest.NewRecorder()
 	})
 
+	Describe("GET /health", func() {
+		Context("when requested", func() {
+			BeforeEach(func() {
+				gineng.ServeHTTP(resrec, httptest.NewRequest(http.MethodGet, "/health", nil))
+			})
+
+			It("just responses 200 OK", func() {
+				Expect(resrec.Result().StatusCode).To(Equal(http.StatusOK))
+				Expect(resrec.Body.String()).To(Equal("OK"))
+			})
+		})
+	})
+
 	Describe("GET /:filename", func() {
 		Context("when a post is available", func() {
 			BeforeEach(func() {
@@ -52,7 +65,7 @@ var _ = Describe("application", func() {
 					&domain.Post{
 						Filename: "20190101-title.md",
 						Title:    "Title",
-						Body: "# Title",
+						Body:     "# Title",
 					},
 					nil,
 				)
