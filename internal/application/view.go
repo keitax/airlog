@@ -43,6 +43,5 @@ func GetPostURL(post *domain.Post) string {
 
 func ParseMarkdown(text string) template.HTML {
 	bs := blackfriday.Run([]byte(text))
-	fmt.Println(string(bs))
 	return template.HTML(string(bs))
 }
