@@ -11,6 +11,14 @@ import (
 
 var _ = Describe("Config", func() {
 	Describe("LoadConfig()", func() {
+		Context("without required environment vars", func() {
+			It("occurs an error", func() {
+				conf, err := osenv.LoadConfig()
+				Expect(err.Error()).To(ContainSubstring("missed env: PORT"))
+				Expect(conf).To(BeNil())
+			})
+		})
+
 		Context("with valid environment vars", func() {
 			env := map[string]string{
 				"PORT":          "3000",
