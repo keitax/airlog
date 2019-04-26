@@ -1,10 +1,13 @@
 package domain
 
+import "time"
+
 type Post struct {
-	Filename string
-	Hash     string
-	Title    string
-	Body     string
+	Filename  string
+	Timestamp time.Time
+	Hash      string
+	Title     string
+	Body      string
 }
 
 type ErrNotFound struct {
