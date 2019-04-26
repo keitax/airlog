@@ -1,7 +1,9 @@
 package di
 
 import (
+	"database/sql"
 	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/keitax/airlog/internal/application"
 	"github.com/keitax/airlog/internal/domain"
 	"github.com/keitax/airlog/internal/infrastructure/osenv"
@@ -30,7 +32,9 @@ func (c Container) PostService() domain.PostService {
 }
 
 func (c Container) PostRepository() domain.PostRepository {
-	return &rds.PostRepository{}
+	return &rds.PostRepository{
+		DB: c.DB(),
+	}
 }
 
 func (c Container) ViewRepository() *application.ViewRepository {
@@ -38,6 +42,14 @@ func (c Container) ViewRepository() *application.ViewRepository {
 		SiteTitle: c.Config().SiteTitle,
 		Footnote:  c.Config().Footnote,
 	}
+}
+
+func (c Container) DB() *sql.DB {
+	db, err := sql.Open("mysql", c.Config().BlogDSN)
+	if err != nil {
+		panic(err)
+	}
+	return db
 }
 
 func (c Container) Config() *application.Config {
