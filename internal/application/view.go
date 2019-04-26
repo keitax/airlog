@@ -3,6 +3,8 @@ package application
 import (
 	"fmt"
 	"github.com/keitax/airlog/internal/domain"
+	"github.com/microcosm-cc/bluemonday"
+	"github.com/russross/blackfriday"
 	"html/template"
 	"net/http"
 	"path/filepath"
@@ -20,7 +22,8 @@ func (v *View) Render(w http.ResponseWriter) error {
 		return err
 	}
 	t, err := template.New("root").Funcs(template.FuncMap{
-		"GetPostURL": GetPostURL,
+		"GetPostURL":    GetPostURL,
+		"ParseMarkdown": ParseMarkdown,
 	}).ParseFiles(fs...)
 	if err != nil {
 		return err
@@ -37,4 +40,10 @@ func (v *View) WriteContentType(w http.ResponseWriter) {
 
 func GetPostURL(post *domain.Post) string {
 	return fmt.Sprintf("/%s", strings.Replace(post.Filename, ".md", ".html", -1))
+}
+
+func ParseMarkdown(text string) template.HTML {
+	bs := blackfriday.Run([]byte(text))
+	bs = bluemonday.UGCPolicy().SanitizeBytes(bs)
+	return template.HTML(string(bs))
 }

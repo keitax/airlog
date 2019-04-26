@@ -1,5 +1,5 @@
 {{template "header.tmpl" . -}}
 <article class="post">
-    {{.renderedBody}}
+    {{ParseMarkdown .post.Body}}
 </article>
 {{template "footer.tmpl" . -}}
