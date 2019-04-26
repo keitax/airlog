@@ -11,12 +11,12 @@ import (
 
 var _ = Describe("Config", func() {
 	Describe("LoadConfig()", func() {
-
 		Context("with valid environment vars", func() {
 			env := map[string]string{
 				"PORT":          "3000",
 				"AL_SITE_TITLE": "Airlog",
 				"AL_FOOTNOTE":   "footnote",
+				"AL_BLOG_DSN":   "root@tcp(localhost:3306)/blog",
 			}
 
 			BeforeEach(func() {
@@ -38,6 +38,7 @@ var _ = Describe("Config", func() {
 					Port:      "3000",
 					SiteTitle: "Airlog",
 					Footnote:  "footnote",
+					BlogDSN:   "root@tcp(localhost:3306)/blog",
 				}))
 			})
 		})

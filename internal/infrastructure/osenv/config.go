@@ -14,6 +14,7 @@ func LoadConfig() (*application.Config, error) {
 		{&conf.Port, "PORT"},
 		{&conf.SiteTitle, "AL_SITE_TITLE"},
 		{&conf.Footnote, "AL_FOOTNOTE"},
+		{&conf.BlogDSN, "AL_BLOG_DSN"},
 	} {
 		*prop.Field = os.Getenv(prop.Name)
 	}
