@@ -3,7 +3,6 @@ package application
 import (
 	"fmt"
 	"github.com/keitax/airlog/internal/domain"
-	"github.com/microcosm-cc/bluemonday"
 	"github.com/russross/blackfriday"
 	"html/template"
 	"net/http"
@@ -44,6 +43,6 @@ func GetPostURL(post *domain.Post) string {
 
 func ParseMarkdown(text string) template.HTML {
 	bs := blackfriday.Run([]byte(text))
-	bs = bluemonday.UGCPolicy().SanitizeBytes(bs)
+	fmt.Println(string(bs))
 	return template.HTML(string(bs))
 }

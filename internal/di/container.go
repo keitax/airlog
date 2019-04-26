@@ -36,6 +36,7 @@ func (c Container) PostRepository() domain.PostRepository {
 func (c Container) ViewRepository() *application.ViewRepository {
 	return &application.ViewRepository{
 		SiteTitle: c.Config().SiteTitle,
+		Footnote:  c.Config().Footnote,
 	}
 }
 

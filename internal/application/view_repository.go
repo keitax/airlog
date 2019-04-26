@@ -6,6 +6,7 @@ import (
 
 type ViewRepository struct {
 	SiteTitle string
+	Footnote  string
 }
 
 func (v *ViewRepository) Post(post *domain.Post) *View {
@@ -14,6 +15,7 @@ func (v *ViewRepository) Post(post *domain.Post) *View {
 		Data: map[string]interface{}{
 			"siteTitle": v.SiteTitle,
 			"post":      post,
+			"footnote":  v.Footnote,
 		},
 	}
 }
@@ -24,6 +26,7 @@ func (v *ViewRepository) List(posts []*domain.Post) *View {
 		Data: map[string]interface{}{
 			"siteTitle": v.SiteTitle,
 			"posts":     posts,
+			"footnote":  v.Footnote,
 		},
 	}
 }
