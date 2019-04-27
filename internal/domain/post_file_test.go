@@ -6,7 +6,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Markdown", func() {
+var _ = Describe("PostFile", func() {
 	Describe("ExtractFrontMatter()", func() {
 		var (
 			content string
