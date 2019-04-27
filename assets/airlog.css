@@ -17,7 +17,7 @@ body {
 @media only screen and (max-width: 50rem) {
     .container > *,
     .site-header > * {
-        width: 95%;
+        width: 90%;
         margin: auto;
     }
 }
@@ -31,7 +31,7 @@ a:link, a:visited {
 
 .site-header {
     background: #eee;
-    border-bottom: solid 1pt #ccc;
+    /*border-bottom: solid 1pt #ccc;*/
     margin-bottom: 3rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -39,7 +39,7 @@ a:link, a:visited {
 
 .site-title {
     font-size: 17pt;
-    color: #369;
+    color: #666;
     margin-top: 0;
     margin-bottom: 0;
 }
