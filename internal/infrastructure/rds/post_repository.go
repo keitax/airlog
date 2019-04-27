@@ -64,3 +64,7 @@ func (repo *PostRepository) All() ([]*domain.Post, error) {
 	}
 	return posts, nil
 }
+
+func (repo *PostRepository) Put(post *domain.Post) error {
+	return nil
+}

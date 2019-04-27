@@ -57,3 +57,15 @@ func (m *MockPostRepository) All() ([]*Post, error) {
 func (mr *MockPostRepositoryMockRecorder) All() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "All", reflect.TypeOf((*MockPostRepository)(nil).All))
 }
+
+// Put mocks base method
+func (m *MockPostRepository) Put(post *Post) error {
+	ret := m.ctrl.Call(m, "Put", post)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Put indicates an expected call of Put
+func (mr *MockPostRepositoryMockRecorder) Put(post interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Put", reflect.TypeOf((*MockPostRepository)(nil).Put), post)
+}

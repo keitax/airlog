@@ -5,4 +5,5 @@ package domain
 type PostRepository interface {
 	Filename(filename string) (*Post, error)
 	All() ([]*Post, error)
+	Put(post *Post) error
 }
