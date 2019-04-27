@@ -5,6 +5,7 @@ import (
 	"github.com/keitax/airlog/internal/domain"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"time"
 )
 
 var _ = Describe("Service", func() {
@@ -63,4 +64,39 @@ var _ = Describe("Service", func() {
 			})
 		})
 	})
+
+	Describe("RegisterPost()", func() {
+		Context("when given a post file", func() {
+			AfterEach(func() {
+				service.RegisterPost("20190101-post.md", `---
+labels: [label-a, label-b]
+---
+
+# Title
+
+content
+`)
+			})
+
+			It("puts a post from the file", func() {
+				mrepo.EXPECT().Put(&domain.Post{
+					Filename:  "20190101-post.md",
+					Timestamp: GetTimestamp("2019-01-01T00:00:00Z"),
+					Title:     "Title",
+					Body: `
+content
+`,
+					Labels: []string{"label-a", "label-b"},
+				})
+			})
+		})
+	})
 })
+
+func GetTimestamp(text string) time.Time {
+	t, err := time.Parse(time.RFC3339, text)
+	if err != nil {
+		panic(err)
+	}
+	return t
+}

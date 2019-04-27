@@ -31,3 +31,21 @@ func (ps *PostServiceImpl) Recent() ([]*Post, error) {
 	}
 	return recent, nil
 }
+
+func (ps *PostServiceImpl) RegisterPost(filename, content string) error {
+	var body string
+	fm, body := ExtractFrontMatter(content)
+	h1, body := ExtractH1(body)
+	post := &Post{
+		Filename:  filename,
+		Timestamp: GetTimestamp(filename),
+		Title:     h1,
+		Body:      body,
+	}
+	if labels, ok := fm["labels"].([]interface{}); ok {
+		for _, label := range labels {
+			post.Labels = append(post.Labels, label.(string))
+		}
+	}
+	return ps.Repository.Put(post)
+}
