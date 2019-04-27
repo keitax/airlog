@@ -133,12 +133,7 @@ var _ = Describe("PostRepository", func() {
 				}
 				defer rs.Close()
 				Expect(rs.Next()).To(BeTrue())
-				var (
-					filename  string
-					timestamp string
-					title     string
-					body      string
-				)
+				var filename, timestamp, title, body string
 				if err := rs.Scan(&filename, &timestamp, &title, &body); err != nil {
 					panic(err)
 				}
@@ -146,6 +141,48 @@ var _ = Describe("PostRepository", func() {
 				Expect(timestamp).To(Equal("2019-01-01 00:00:00"))
 				Expect(title).To(Equal("Title"))
 				Expect(body).To(Equal("hello world"))
+			})
+		})
+
+		Context("when a post is inserted", func() {
+			BeforeEach(func() {
+				for _, rec := range [][]interface{}{
+					{"20190101-post.md", "2019-01-01 00:00:00", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "Original Title", "orignal body"},
+				} {
+					if _, err := db.Exec(`insert into post (filename, timestamp, hash, title, body) values (?, ?, ?, ?, ?)`, rec...); err != nil {
+						panic(err)
+					}
+				}
+			})
+
+			Context("given a post file whose filename is same", func() {
+				BeforeEach(func() {
+					post = &domain.Post{
+						Filename:  "20190101-post.md",
+						Timestamp: Time("2019-01-01 00:00:00"),
+						Title:     "Changed Title",
+						Body:      "changed body",
+					}
+				})
+
+				It("updates the post record", func() {
+					Expect(err).NotTo(HaveOccurred())
+					var rs *sql.Rows
+					rs, err = db.Query("select filename, timestamp, title, body from post")
+					if err != nil {
+						panic(err)
+					}
+					defer rs.Close()
+					Expect(rs.Next()).To(BeTrue())
+					var filename, timestamp, title, body string
+					if err := rs.Scan(&filename, &timestamp, &title, &body); err != nil {
+						panic(err)
+					}
+					Expect(filename).To(Equal("20190101-post.md"))
+					Expect(timestamp).To(Equal("2019-01-01 00:00:00"))
+					Expect(title).To(Equal("Changed Title"))
+					Expect(body).To(Equal("changed body"))
+				})
 			})
 		})
 	})

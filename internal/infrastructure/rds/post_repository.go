@@ -67,10 +67,13 @@ func (repo *PostRepository) All() ([]*domain.Post, error) {
 
 func (repo *PostRepository) Put(post *domain.Post) error {
 	if _, err := repo.DB.Exec(
-		`insert into post (filename, timestamp, hash, title, body) values (?, ?, ?, ?, ?)`,
+		`insert into post (filename, timestamp, hash, title, body) values (?, ?, ?, ?, ?) 
+on duplicate key update title = ?, body = ?`,
 		post.Filename,
 		post.Timestamp.Format("2006-01-02 15:04:05"),
 		"",
+		post.Title,
+		post.Body,
 		post.Title,
 		post.Body,
 	); err != nil {
