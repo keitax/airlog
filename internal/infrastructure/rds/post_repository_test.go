@@ -103,6 +103,52 @@ var _ = Describe("PostRepository", func() {
 			})
 		})
 	})
+
+	Describe("Put()", func() {
+		var (
+			post *domain.Post
+			err  error
+		)
+
+		JustBeforeEach(func() {
+			err = postrepo.Put(post)
+		})
+
+		Context("when a post is given", func() {
+			BeforeEach(func() {
+				post = &domain.Post{
+					Filename:  "20190101-post.md",
+					Timestamp: Time("2019-01-01 00:00:00"),
+					Title:     "Title",
+					Body:      "hello world",
+				}
+			})
+
+			It("inserts a post record", func() {
+				Expect(err).NotTo(HaveOccurred())
+				var rs *sql.Rows
+				rs, err = db.Query("select filename, timestamp, title, body from post")
+				if err != nil {
+					panic(err)
+				}
+				defer rs.Close()
+				Expect(rs.Next()).To(BeTrue())
+				var (
+					filename  string
+					timestamp string
+					title     string
+					body      string
+				)
+				if err := rs.Scan(&filename, &timestamp, &title, &body); err != nil {
+					panic(err)
+				}
+				Expect(filename).To(Equal("20190101-post.md"))
+				Expect(timestamp).To(Equal("2019-01-01 00:00:00"))
+				Expect(title).To(Equal("Title"))
+				Expect(body).To(Equal("hello world"))
+			})
+		})
+	})
 })
 
 func Time(text string) time.Time {
