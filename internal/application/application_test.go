@@ -1,6 +1,7 @@
 package application_test
 
 import (
+	"bytes"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
 	"github.com/keitax/airlog/internal/application"
@@ -16,6 +17,7 @@ var _ = Describe("application", func() {
 	var (
 		c       *gomock.Controller
 		mpsvc   *domain.MockPostService
+		mghrepo *domain.MockGitHubRepository
 		gineng  *gin.Engine
 		resrec  *httptest.ResponseRecorder
 		origDir string
@@ -38,10 +40,17 @@ var _ = Describe("application", func() {
 	BeforeEach(func() {
 		c = gomock.NewController(GinkgoT())
 		mpsvc = domain.NewMockPostService(c)
-		gineng = application.SetupGin(&application.PostController{
-			Service:        mpsvc,
-			ViewRepository: &application.ViewRepository{},
-		})
+		mghrepo = domain.NewMockGitHubRepository(c)
+		gineng = application.SetupGin(
+			&application.PostController{
+				Service:        mpsvc,
+				ViewRepository: &application.ViewRepository{},
+			},
+			&application.WebhookController{
+				PostService:      mpsvc,
+				GitHubRepository: mghrepo,
+			},
+		)
 		resrec = httptest.NewRecorder()
 	})
 
@@ -79,6 +88,35 @@ var _ = Describe("application", func() {
 				It("renders a post page", func() {
 					Expect(resrec.Result().StatusCode).To(Equal(http.StatusOK))
 					Expect(resrec.Body.String()).To(ContainSubstring("<h1>Title</h1>"))
+				})
+			})
+		})
+	})
+
+	Describe("POST /webhook", func() {
+		Context("given changed files", func() {
+			BeforeEach(func() {
+				mghrepo.EXPECT().ChangedFiles(&domain.PushEvent{
+					BeforeCommitID: "<before-commit-id>",
+					AfterCommitID:  "<after-commit-id>",
+				}).AnyTimes().Return([]*domain.File{
+					{"20190101-a.md", "body-a"},
+					{"20190102-b.md", "body-b"},
+				}, nil)
+			})
+
+			Context("when takes a push event", func() {
+				AfterEach(func() {
+					gineng.ServeHTTP(resrec, httptest.NewRequest(
+						http.MethodPost,
+						"/webhook",
+						bytes.NewBufferString(`{"before":"<before-commit-id>","after":"<after-commit-id>"}`),
+					))
+				})
+
+				It("registers the changed files", func() {
+					mpsvc.EXPECT().RegisterPost("20190101-a.md", "body-a").Return(nil)
+					mpsvc.EXPECT().RegisterPost("20190102-b.md", "body-b").Return(nil)
 				})
 			})
 		})

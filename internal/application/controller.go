@@ -1,8 +1,11 @@
 package application
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/keitax/airlog/internal/domain"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -31,4 +34,34 @@ func (pc *PostController) List(ctx *gin.Context) {
 		return
 	}
 	ctx.Render(http.StatusOK, pc.ViewRepository.List(posts))
+}
+
+type WebhookController struct {
+	PostService      domain.PostService
+	GitHubRepository domain.GitHubRepository
+}
+
+func (whc *WebhookController) Post(ctx *gin.Context) {
+	bs, err := ioutil.ReadAll(ctx.Request.Body)
+	if err != nil {
+		ctx.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+	var ev domain.PushEvent
+	if err := json.Unmarshal(bs, &ev); err != nil {
+		ctx.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+	fmt.Println(string(bs))
+	fs, err := whc.GitHubRepository.ChangedFiles(&ev)
+	if err != nil {
+		ctx.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+	for _, f := range fs {
+		if err := whc.PostService.RegisterPost(f.Path, f.Content); err != nil {
+			ctx.AbortWithError(http.StatusInternalServerError, err)
+			return
+		}
+	}
 }
