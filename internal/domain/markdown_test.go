@@ -48,4 +48,49 @@ hello world`
 			})
 		})
 	})
+
+	Describe("ExtractH1()", func() {
+		var (
+			h1      string
+			rest    string
+			content string
+		)
+
+		JustBeforeEach(func() {
+			h1, rest = domain.ExtractH1(content)
+		})
+
+		Context("when the content has a h1 line", func() {
+			BeforeEach(func() {
+				content = `foo
+# bar
+foobar
+`
+			})
+
+			It("extract the h1 line", func() {
+				Expect(h1).To(Equal("bar"))
+				Expect(rest).To(Equal(`foo
+foobar
+`))
+			})
+		})
+
+		Context("when the content has no h1 line", func() {
+			BeforeEach(func() {
+				content = `foo
+
+bar
+`
+			})
+
+			It("extract the h1 line", func() {
+				Expect(h1).To(HaveLen(0))
+				Expect(rest).To(Equal(`foo
+
+bar
+`))
+			})
+		})
+	})
 })

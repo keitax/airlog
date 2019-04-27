@@ -1,11 +1,18 @@
 package domain
 
 import (
+	"bufio"
+	"bytes"
+	"fmt"
 	"gopkg.in/yaml.v2"
+	"io"
 	"regexp"
 )
 
-var frontMatterRegexp = regexp.MustCompile(`(?ms)^---\s*$\n(.*?)^---\s*$\n(.*)`)
+var (
+	frontMatterRegexp = regexp.MustCompile(`(?ms)^---\s*$\n(.*?)^---\s*$\n(.*)`)
+	h1Regexp          = regexp.MustCompile(`^#\s+(.+)\s*$`)
+)
 
 func ExtractFrontMatter(content string) (map[string]interface{}, string) {
 	ms := frontMatterRegexp.FindStringSubmatch(content)
@@ -23,3 +30,23 @@ func ExtractFrontMatter(content string) (map[string]interface{}, string) {
 	return metadata, bodySection
 }
 
+func ExtractH1(content string) (string, string) {
+	r := bufio.NewReader(bytes.NewBufferString(content))
+	buf := &bytes.Buffer{}
+	var h1 string
+	for {
+		line, _, err := r.ReadLine()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			panic(err)
+		}
+		if ms := h1Regexp.FindStringSubmatch(string(line)); len(ms) > 1 {
+			h1 = ms[1]
+		} else {
+			fmt.Fprintln(buf, string(line))
+		}
+	}
+	return h1, buf.String()
+}
