@@ -18,6 +18,7 @@ func LoadConfig() (*application.Config, error) {
 		{&conf.SiteTitle, "AL_SITE_TITLE"},
 		{&conf.Footnote, "AL_FOOTNOTE"},
 		{&conf.BlogDSN, "AL_BLOG_DSN"},
+		{&conf.GitHubAPIPostRepositoryEndpoint, "AL_GITHUB_API_POST_REPOSITORY_ENDPOINT"},
 	} {
 		v := os.Getenv(prop.Name)
 		if v == "" {

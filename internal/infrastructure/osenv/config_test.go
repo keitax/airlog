@@ -21,10 +21,11 @@ var _ = Describe("Config", func() {
 
 		Context("with valid environment vars", func() {
 			env := map[string]string{
-				"PORT":          "3000",
-				"AL_SITE_TITLE": "Airlog",
-				"AL_FOOTNOTE":   "footnote",
-				"AL_BLOG_DSN":   "root@tcp(localhost:3306)/blog",
+				"PORT":                                   "3000",
+				"AL_SITE_TITLE":                          "Airlog",
+				"AL_FOOTNOTE":                            "footnote",
+				"AL_BLOG_DSN":                            "root@tcp(localhost:3306)/blog",
+				"AL_GITHUB_API_POST_REPOSITORY_ENDPOINT": "https://api.github.com/repos/user/posts",
 			}
 
 			BeforeEach(func() {
@@ -43,10 +44,11 @@ var _ = Describe("Config", func() {
 				conf, err := osenv.LoadConfig()
 				Expect(err).NotTo(HaveOccurred())
 				Expect(conf).To(Equal(&application.Config{
-					Port:      "3000",
-					SiteTitle: "Airlog",
-					Footnote:  "footnote",
-					BlogDSN:   "root@tcp(localhost:3306)/blog",
+					Port:                            "3000",
+					SiteTitle:                       "Airlog",
+					Footnote:                        "footnote",
+					BlogDSN:                         "root@tcp(localhost:3306)/blog",
+					GitHubAPIPostRepositoryEndpoint: "https://api.github.com/repos/user/posts",
 				}))
 			})
 		})
