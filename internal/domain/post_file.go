@@ -7,12 +7,26 @@ import (
 	"gopkg.in/yaml.v2"
 	"io"
 	"regexp"
+	"time"
 )
 
 var (
+	filenameRegexp    = regexp.MustCompile(`^(\d{8})\-.+\.md$`)
 	frontMatterRegexp = regexp.MustCompile(`(?ms)^---\s*$\n(.*?)^---\s*$\n(.*)`)
 	h1Regexp          = regexp.MustCompile(`^#\s+(.+)\s*$`)
 )
+
+func GetTimestamp(filename string) time.Time {
+	ms := filenameRegexp.FindStringSubmatch(filename)
+	if len(ms) < 2 {
+		panic(fmt.Errorf("must not happen: %v", ms))
+	}
+	t, err := time.Parse("20060102", ms[1])
+	if err != nil {
+		panic(err) // must not happen
+	}
+	return t
+}
 
 func ExtractFrontMatter(content string) (map[string]interface{}, string) {
 	ms := frontMatterRegexp.FindStringSubmatch(content)

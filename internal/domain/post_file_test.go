@@ -4,9 +4,19 @@ import (
 	"github.com/keitax/airlog/internal/domain"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"time"
 )
 
 var _ = Describe("PostFile", func() {
+	Describe("GetTimestamp()", func() {
+		It("parses a timestamp from a file name", func() {
+			got := domain.GetTimestamp("20190101-foo.md")
+			Expect(got.Year()).To(Equal(2019))
+			Expect(got.Month()).To(Equal(time.January))
+			Expect(got.Day()).To(Equal(1))
+		})
+	})
+
 	Describe("ExtractFrontMatter()", func() {
 		var (
 			content string
