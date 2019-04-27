@@ -57,3 +57,15 @@ func (m *MockPostService) Recent() ([]*Post, error) {
 func (mr *MockPostServiceMockRecorder) Recent() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recent", reflect.TypeOf((*MockPostService)(nil).Recent))
 }
+
+// RegisterPost mocks base method
+func (m *MockPostService) RegisterPost(filename, content string) error {
+	ret := m.ctrl.Call(m, "RegisterPost", filename, content)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RegisterPost indicates an expected call of RegisterPost
+func (mr *MockPostServiceMockRecorder) RegisterPost(filename, content interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RegisterPost", reflect.TypeOf((*MockPostService)(nil).RegisterPost), filename, content)
+}

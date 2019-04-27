@@ -7,3 +7,7 @@ type PostRepository interface {
 	All() ([]*Post, error)
 	Put(post *Post) error
 }
+
+type GitHubRepository interface {
+	ChangedFiles(event *PushEvent) ([]*File, error)
+}

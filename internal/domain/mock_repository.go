@@ -69,3 +69,39 @@ func (m *MockPostRepository) Put(post *Post) error {
 func (mr *MockPostRepositoryMockRecorder) Put(post interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Put", reflect.TypeOf((*MockPostRepository)(nil).Put), post)
 }
+
+// MockGitHubRepository is a mock of GitHubRepository interface
+type MockGitHubRepository struct {
+	ctrl     *gomock.Controller
+	recorder *MockGitHubRepositoryMockRecorder
+}
+
+// MockGitHubRepositoryMockRecorder is the mock recorder for MockGitHubRepository
+type MockGitHubRepositoryMockRecorder struct {
+	mock *MockGitHubRepository
+}
+
+// NewMockGitHubRepository creates a new mock instance
+func NewMockGitHubRepository(ctrl *gomock.Controller) *MockGitHubRepository {
+	mock := &MockGitHubRepository{ctrl: ctrl}
+	mock.recorder = &MockGitHubRepositoryMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use
+func (m *MockGitHubRepository) EXPECT() *MockGitHubRepositoryMockRecorder {
+	return m.recorder
+}
+
+// ChangedFiles mocks base method
+func (m *MockGitHubRepository) ChangedFiles(event *PushEvent) ([]*File, error) {
+	ret := m.ctrl.Call(m, "ChangedFiles", event)
+	ret0, _ := ret[0].([]*File)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ChangedFiles indicates an expected call of ChangedFiles
+func (mr *MockGitHubRepositoryMockRecorder) ChangedFiles(event interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChangedFiles", reflect.TypeOf((*MockGitHubRepository)(nil).ChangedFiles), event)
+}

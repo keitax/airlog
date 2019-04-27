@@ -14,3 +14,13 @@ type Post struct {
 type ErrNotFound struct {
 	error
 }
+
+type PushEvent struct {
+	BeforeCommitID string `json:"before"`
+	AfterCommitID  string `json:"after"`
+}
+
+type File struct {
+	Path    string
+	Content string
+}

@@ -9,6 +9,7 @@ import (
 type PostService interface {
 	GetByHTMLFilename(filename string) (*Post, error)
 	Recent() ([]*Post, error)
+	RegisterPost(filename, content string) error
 }
 
 type PostServiceImpl struct {
