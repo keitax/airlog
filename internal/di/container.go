@@ -6,6 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/keitax/airlog/internal/application"
 	"github.com/keitax/airlog/internal/domain"
+	"github.com/keitax/airlog/internal/infrastructure/ghapi"
 	"github.com/keitax/airlog/internal/infrastructure/osenv"
 	"github.com/keitax/airlog/internal/infrastructure/rds"
 )
@@ -13,7 +14,7 @@ import (
 type Container struct{}
 
 func (c Container) Gin() *gin.Engine {
-	g := application.SetupGin(c.PostController())
+	g := application.SetupGin(c.PostController(), c.WebhookController())
 	g.Use(gin.Recovery(), gin.Logger())
 	return g
 }
@@ -22,6 +23,13 @@ func (c Container) PostController() *application.PostController {
 	return &application.PostController{
 		Service:        c.PostService(),
 		ViewRepository: c.ViewRepository(),
+	}
+}
+
+func (c Container) WebhookController() *application.WebhookController {
+	return &application.WebhookController{
+		PostService:      c.PostService(),
+		GitHubRepository: c.GitHubRepository(),
 	}
 }
 
@@ -42,6 +50,10 @@ func (c Container) ViewRepository() *application.ViewRepository {
 		SiteTitle: c.Config().SiteTitle,
 		Footnote:  c.Config().Footnote,
 	}
+}
+
+func (c Container) GitHubRepository() domain.GitHubRepository {
+	return &ghapi.GitHubRepository{}
 }
 
 func (c Container) DB() *sql.DB {
