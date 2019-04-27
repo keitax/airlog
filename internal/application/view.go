@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 type View struct {
@@ -44,4 +45,8 @@ func GetPostURL(post *domain.Post) string {
 func ParseMarkdown(text string) template.HTML {
 	bs := blackfriday.Run([]byte(text))
 	return template.HTML(string(bs))
+}
+
+func ShowDate(t time.Time) string {
+	return t.Format("2006-01-02")
 }
