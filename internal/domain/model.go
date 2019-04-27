@@ -8,6 +8,7 @@ type Post struct {
 	Hash      string
 	Title     string
 	Body      string
+	Labels    []string
 }
 
 type ErrNotFound struct {
