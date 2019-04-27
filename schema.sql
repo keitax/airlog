@@ -6,4 +6,4 @@ create table if not exists post
   title     varchar(256) not null,
   body      text         not null,
   primary key (filename)
-);
+) row_format = dynamic;
