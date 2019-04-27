@@ -24,6 +24,7 @@ func (v *View) Render(w http.ResponseWriter) error {
 	t, err := template.New("root").Funcs(template.FuncMap{
 		"GetPostURL":    GetPostURL,
 		"ParseMarkdown": ParseMarkdown,
+		"ShowDate":      ShowDate,
 	}).ParseFiles(fs...)
 	if err != nil {
 		return err

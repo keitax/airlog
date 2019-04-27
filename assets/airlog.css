@@ -75,11 +75,21 @@ a:link, a:visited {
 
 .post-list {
     padding: 0;
+    line-height: 1.6;
+}
+
+.post-list__date {
+    color: #666;
+    font-size: 89%;
+    margin: 0;
 }
 
 .post-list__item {
     list-style-type: none;
     margin: 2rem 0;
+}
+
+.post-list__link {
 }
 
 .site-footer {
