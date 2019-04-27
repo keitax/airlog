@@ -15,10 +15,10 @@ body {
 }
 
 @media only screen and (max-width: 50rem) {
-    .container > *,
-    .site-header > * {
-        width: 90%;
-        margin: auto;
+    .container, .site-header {
+        font-size: 89%;
+        padding-left: 1em;
+        padding-right: 1em;
     }
 }
 
@@ -31,14 +31,13 @@ a:link, a:visited {
 
 .site-header {
     background: #eee;
-    /*border-bottom: solid 1pt #ccc;*/
     margin-bottom: 3rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
 
 .site-title {
-    font-size: 17pt;
+    font-size: 127%;
     color: #666;
     margin-top: 0;
     margin-bottom: 0;
@@ -56,7 +55,7 @@ a:link, a:visited {
 }
 
 .post h1 {
-    font-size: x-large;
+    font-size: 127%;
     margin: 3rem 0 2rem;
 }
 
@@ -65,7 +64,7 @@ a:link, a:visited {
 }
 
 .post h2 {
-    font-size: larger;
+    font-size: 112%;
     margin: 2rem 0 1rem;
 }
 
@@ -80,7 +79,6 @@ a:link, a:visited {
 
 .post-list__item {
     list-style-type: none;
-    font-size: large;
     margin: 2rem 0;
 }
 
