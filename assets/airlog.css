@@ -63,7 +63,7 @@ a:link, a:visited {
     padding-bottom: 2rem;
 }
 
-.post__date {
+.post__header {
     color: #666;
     margin: 0 !important;
 }
@@ -92,7 +92,7 @@ a:link, a:visited {
     line-height: 1.6;
 }
 
-.post-list__date {
+.post-list__item-header {
     color: #666;
     font-size: 89%;
     margin: 0;

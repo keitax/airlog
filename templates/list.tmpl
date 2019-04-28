@@ -2,7 +2,12 @@
 <ul class="post-list">
     {{range .posts}}
         <li class="post-list__item">
-            <p class="post-list__date">{{ShowDate .Timestamp}}</p>
+            <p class="post-list__item-header">
+                {{ShowDate .Timestamp}}
+                {{if .Labels -}}
+                    - {{ShowLabels .}}
+                {{end -}}
+            </p>
             <a class="post-list__link" href="{{. | GetPostURL}}">{{.Title}}</a>
         </li>
     {{end}}

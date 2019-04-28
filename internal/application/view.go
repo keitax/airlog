@@ -25,6 +25,9 @@ func (v *View) Render(w http.ResponseWriter) error {
 		"GetPostURL":    GetPostURL,
 		"ParseMarkdown": ParseMarkdown,
 		"ShowDate":      ShowDate,
+		"ShowLabels": func(p *domain.Post) string {
+			return strings.Join(p.Labels, ", ")
+		},
 	}).ParseFiles(fs...)
 	if err != nil {
 		return err

@@ -1,6 +1,11 @@
 {{template "header.tmpl" . -}}
 <article class="post">
-    <p class="post__date">{{ShowDate .post.Timestamp}}</p>
+    <p class="post__header">
+        {{ShowDate .post.Timestamp -}}
+        {{if .post.Labels}}
+            - {{ShowLabels .post}}
+        {{end}}
+    </p>
     <h1>{{.post.Title}}</h1>
     {{ParseMarkdown .post.Body}}
 </article>
