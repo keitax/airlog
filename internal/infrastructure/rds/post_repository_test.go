@@ -28,6 +28,9 @@ var _ = Describe("PostRepository", func() {
 		if _, err := db.Exec(`delete from post`); err != nil {
 			panic(err)
 		}
+		if _, err := db.Exec(`delete from post_label`); err != nil {
+			panic(err)
+		}
 	})
 
 	Describe("Filename()", func() {
@@ -43,6 +46,15 @@ var _ = Describe("PostRepository", func() {
 					}
 				}
 
+				for _, rec := range [][]interface{}{
+					{"20190101-post.md", "label-1"},
+					{"20190102-post.md", "label-2"},
+					{"20190103-post.md", "label-3"},
+				} {
+					if _, err := db.Exec(`insert into post_label (filename, label) values (?, ?)`, rec...); err != nil {
+						panic(err)
+					}
+				}
 			})
 
 			It("selects the specify post by a filename", func() {
@@ -54,6 +66,7 @@ var _ = Describe("PostRepository", func() {
 					Hash:      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 					Title:     "Title2",
 					Body:      "Body2",
+					Labels:    []string{"label-2"},
 				}))
 			})
 		})

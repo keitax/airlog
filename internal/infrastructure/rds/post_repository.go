@@ -35,6 +35,20 @@ func (repo *PostRepository) Filename(filename string) (*domain.Post, error) {
 		return nil, err
 	}
 	post.Timestamp = tst
+
+	rs, err = repo.DB.Query("select label from post_label where filename = ?", filename)
+	if err != nil {
+		return nil, err
+	}
+	defer rs.Close()
+	for rs.Next() {
+		var label string
+		if err := rs.Scan(&label); err != nil {
+			return nil, err
+		}
+		post.Labels = append(post.Labels, label)
+	}
+
 	return post, nil
 }
 
