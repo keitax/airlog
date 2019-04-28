@@ -1,5 +1,7 @@
 {{template "header.tmpl" . -}}
 <article class="post">
+    <p class="post__date">{{ShowDate .post.Timestamp}}</p>
+    <h1>{{.post.Title}}</h1>
     {{ParseMarkdown .post.Body}}
 </article>
 {{template "footer.tmpl" . -}}
