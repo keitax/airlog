@@ -7,3 +7,9 @@ create table if not exists post
   body      text         not null,
   primary key (filename)
 ) row_format = dynamic;
+
+create table if not exists post_label
+(
+  filename varchar(256),
+  label    varchar(256)
+) row_format = dynamic;
