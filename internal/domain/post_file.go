@@ -16,6 +16,10 @@ var (
 	h1Regexp          = regexp.MustCompile(`^#\s+(.+)\s*$`)
 )
 
+func IsPostFileName(filename string) bool {
+	return filenameRegexp.MatchString(filename)
+}
+
 func GetTimestamp(filename string) time.Time {
 	ms := filenameRegexp.FindStringSubmatch(filename)
 	if len(ms) < 2 {

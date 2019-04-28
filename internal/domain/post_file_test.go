@@ -8,6 +8,16 @@ import (
 )
 
 var _ = Describe("PostFile", func() {
+	Describe("IsPostFileName()", func() {
+		It("returns true if a given filename has valid format", func() {
+			Expect(domain.IsPostFileName("20190101-post.md")).To(BeTrue())
+			Expect(domain.IsPostFileName("20190101-post")).To(BeFalse())
+			Expect(domain.IsPostFileName("2019010-.md")).To(BeFalse())
+			Expect(domain.IsPostFileName("2019010-post.md")).To(BeFalse())
+			Expect(domain.IsPostFileName("")).To(BeFalse())
+		})
+	})
+
 	Describe("GetTimestamp()", func() {
 		It("parses a timestamp from a file name", func() {
 			got := domain.GetTimestamp("20190101-foo.md")
