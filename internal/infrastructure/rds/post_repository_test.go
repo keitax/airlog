@@ -93,6 +93,15 @@ var _ = Describe("PostRepository", func() {
 					}
 				}
 
+				for _, rec := range [][]interface{}{
+					{"20190101-post.md", "label-1"},
+					{"20190102-post.md", "label-2"},
+					{"20190103-post.md", "label-3"},
+				} {
+					if _, err := db.Exec(`insert into post_label (filename, label) values (?, ?)`, rec...); err != nil {
+						panic(err)
+					}
+				}
 			})
 
 			It("selects all the posts ordered by timestamp", func() {
@@ -105,6 +114,7 @@ var _ = Describe("PostRepository", func() {
 					Hash:      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 					Title:     "Title3",
 					Body:      "Body3",
+					Labels:    []string{"label-3"},
 				}))
 				Expect(got[len(got)-1]).To(Equal(&domain.Post{
 					Filename:  "20190101-post.md",
@@ -112,6 +122,7 @@ var _ = Describe("PostRepository", func() {
 					Hash:      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 					Title:     "Title1",
 					Body:      "Body1",
+					Labels:    []string{"label-1"},
 				}))
 			})
 		})

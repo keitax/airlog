@@ -53,7 +53,20 @@ func (repo *PostRepository) Filename(filename string) (*domain.Post, error) {
 }
 
 func (repo *PostRepository) All() ([]*domain.Post, error) {
-	rs, err := repo.DB.Query("select filename, timestamp, hash, title, body from post order by timestamp desc")
+	labels := map[string][]string{}
+	rs, err := repo.DB.Query(`select filename, label from post_label`)
+	if err != nil {
+		return nil, err
+	}
+	defer rs.Close()
+	for rs.Next() {
+		var filename, label string
+		if err := rs.Scan(&filename, &label); err != nil {
+			return nil, err
+		}
+		labels[filename] = append(labels[filename], label)
+	}
+	rs, err = repo.DB.Query("select filename, timestamp, hash, title, body from post order by timestamp desc")
 	if err != nil {
 		return nil, err
 	}
@@ -75,6 +88,7 @@ func (repo *PostRepository) All() ([]*domain.Post, error) {
 			return nil, err
 		}
 		post.Timestamp = tst
+		post.Labels = labels[post.Filename]
 		posts = append(posts, post)
 	}
 	return posts, nil
