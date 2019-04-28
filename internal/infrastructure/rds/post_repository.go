@@ -15,6 +15,7 @@ func (repo *PostRepository) Filename(filename string) (*domain.Post, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer rs.Close()
 	if !rs.Next() {
 		return nil, domain.ErrNotFound{}
 	}
