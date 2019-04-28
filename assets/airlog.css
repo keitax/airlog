@@ -13,6 +13,10 @@ body {
         width: 50rem;
         margin-left: 1.6rem;
     }
+
+    .post img {
+        width: 80%;
+    }
 }
 
 @media only screen and (max-width: 50rem) {
@@ -20,6 +24,10 @@ body {
         font-size: 89%;
         padding-left: 1em;
         padding-right: 1em;
+    }
+
+    .post img {
+        width: 100%;
     }
 }
 
