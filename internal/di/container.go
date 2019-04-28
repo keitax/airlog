@@ -53,7 +53,9 @@ func (c Container) ViewRepository() *application.ViewRepository {
 }
 
 func (c Container) GitHubRepository() domain.GitHubRepository {
-	return &ghapi.GitHubRepository{}
+	return &ghapi.GitHubRepository{
+		GitHubAPIPostRepositoryEndpoint: c.Config().GitHubAPIPostRepositoryEndpoint,
+	}
 }
 
 func (c Container) DB() *sql.DB {
