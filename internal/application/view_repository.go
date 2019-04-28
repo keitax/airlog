@@ -1,6 +1,7 @@
 package application
 
 import (
+	"fmt"
 	"github.com/keitax/airlog/internal/domain"
 )
 
@@ -13,9 +14,10 @@ func (v *ViewRepository) Post(post *domain.Post) *View {
 	return &View{
 		TemplatePath: "templates/post.tmpl",
 		Data: map[string]interface{}{
-			"siteTitle": v.SiteTitle,
-			"post":      post,
-			"footnote":  v.Footnote,
+			"headerTitle": fmt.Sprintf("%s - %s", post.Title, v.SiteTitle),
+			"siteTitle":   v.SiteTitle,
+			"post":        post,
+			"footnote":    v.Footnote,
 		},
 	}
 }
@@ -24,9 +26,10 @@ func (v *ViewRepository) List(posts []*domain.Post) *View {
 	return &View{
 		TemplatePath: "templates/list.tmpl",
 		Data: map[string]interface{}{
-			"siteTitle": v.SiteTitle,
-			"posts":     posts,
-			"footnote":  v.Footnote,
+			"headerTitle": v.SiteTitle,
+			"siteTitle":   v.SiteTitle,
+			"posts":       posts,
+			"footnote":    v.Footnote,
 		},
 	}
 }
