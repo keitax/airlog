@@ -2,7 +2,6 @@ package application
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/keitax/airlog/internal/domain"
 	"io/ioutil"
@@ -52,16 +51,17 @@ func (whc *WebhookController) Post(ctx *gin.Context) {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
-	fmt.Println(string(bs))
 	fs, err := whc.GitHubRepository.ChangedFiles(&ev)
 	if err != nil {
 		ctx.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
 	for _, f := range fs {
-		if err := whc.PostService.RegisterPost(f.Path, f.Content); err != nil {
-			ctx.AbortWithError(http.StatusInternalServerError, err)
-			return
+		if domain.IsPostFileName(f.Path) {
+			if err := whc.PostService.RegisterPost(f.Path, f.Content); err != nil {
+				ctx.AbortWithError(http.StatusInternalServerError, err)
+				return
+			}
 		}
 	}
 }
