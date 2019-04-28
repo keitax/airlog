@@ -80,5 +80,14 @@ on duplicate key update title = ?, body = ?`,
 	); err != nil {
 		return err
 	}
+	if _, err := repo.DB.Exec(`delete from post_label where filename = ?`, post.Filename); err != nil {
+		return err
+	}
+	for _, label := range post.Labels {
+		if _, err := repo.DB.Exec(`insert into post_label (filename, label) values (?, ?)`, post.Filename, label);
+			err != nil {
+			return err
+		}
+	}
 	return nil
 }

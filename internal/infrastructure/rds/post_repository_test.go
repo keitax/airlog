@@ -121,6 +121,7 @@ var _ = Describe("PostRepository", func() {
 					Timestamp: Time("2019-01-01 00:00:00"),
 					Title:     "Title",
 					Body:      "hello world",
+					Labels:    []string{"label-0", "label-1"},
 				}
 			})
 
@@ -141,6 +142,25 @@ var _ = Describe("PostRepository", func() {
 				Expect(timestamp).To(Equal("2019-01-01 00:00:00"))
 				Expect(title).To(Equal("Title"))
 				Expect(body).To(Equal("hello world"))
+			})
+
+			It("inserts label records", func() {
+				Expect(err).NotTo(HaveOccurred())
+				rs, err := db.Query("select label from post_label where filename = ?", "20190101-post.md")
+				if err != nil {
+					panic(err)
+				}
+				defer rs.Close()
+				var labels []string
+				for rs.Next() {
+					var label string
+					if err := rs.Scan(&label); err != nil {
+						panic(err)
+					}
+					labels = append(labels, label)
+				}
+				Expect(labels).To(ContainElement("label-0"))
+				Expect(labels).To(ContainElement("label-1"))
 			})
 		})
 
