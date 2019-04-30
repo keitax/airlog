@@ -19,9 +19,9 @@ func (pc *PostController) Get(ctx *gin.Context) {
 	if _, ok := err.(domain.ErrNotFound); ok {
 		ctx.AbortWithError(http.StatusNotFound, err)
 		return
-	} else if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
-		return
+	}
+	if err != nil {
+		panic(err)
 	}
 	ctx.Render(http.StatusOK, pc.ViewRepository.Post(post))
 }
@@ -29,8 +29,7 @@ func (pc *PostController) Get(ctx *gin.Context) {
 func (pc *PostController) List(ctx *gin.Context) {
 	posts, err := pc.Service.Recent()
 	if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
-		return
+		panic(err)
 	}
 	ctx.Render(http.StatusOK, pc.ViewRepository.List(posts))
 }
@@ -43,24 +42,20 @@ type WebhookController struct {
 func (whc *WebhookController) Post(ctx *gin.Context) {
 	bs, err := ioutil.ReadAll(ctx.Request.Body)
 	if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
-		return
+		panic(err)
 	}
 	var ev domain.PushEvent
 	if err := json.Unmarshal(bs, &ev); err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
-		return
+		panic(err)
 	}
 	fs, err := whc.GitHubRepository.ChangedFiles(&ev)
 	if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
-		return
+		panic(err)
 	}
 	for _, f := range fs {
 		if domain.IsPostFileName(f.Path) {
 			if err := whc.PostService.RegisterPost(f.Path, f.Content); err != nil {
-				ctx.AbortWithError(http.StatusInternalServerError, err)
-				return
+				panic(err)
 			}
 		}
 	}
