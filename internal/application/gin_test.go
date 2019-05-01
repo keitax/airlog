@@ -13,7 +13,7 @@ import (
 	"os"
 )
 
-var _ = Describe("application", func() {
+var _ = Describe("Gin", func() {
 	var (
 		c       *gomock.Controller
 		mpsvc   *domain.MockPostService
