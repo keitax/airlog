@@ -6,7 +6,7 @@ import (
 )
 
 func SetupGin(controller *PostController, webhookController *WebhookController) *gin.Engine {
-	g := gin.Default()
+	g := gin.New()
 
 	g.GET("/", controller.List)
 	g.GET("/:basePath", func(ctx *gin.Context) {
