@@ -107,11 +107,13 @@ var _ = Describe("Gin", func() {
 
 			Context("when takes a push event", func() {
 				AfterEach(func() {
-					gineng.ServeHTTP(resrec, httptest.NewRequest(
+					req := httptest.NewRequest(
 						http.MethodPost,
 						"/webhook",
 						bytes.NewBufferString(`{"before":"<before-commit-id>","after":"<after-commit-id>"}`),
-					))
+					)
+					req.Header.Set("Content-Type", "application/json")
+					gineng.ServeHTTP(resrec, req)
 				})
 
 				It("registers the changed files", func() {

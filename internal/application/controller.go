@@ -1,10 +1,8 @@
 package application
 
 import (
-	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/keitax/airlog/internal/domain"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -40,12 +38,8 @@ type WebhookController struct {
 }
 
 func (whc *WebhookController) Post(ctx *gin.Context) {
-	bs, err := ioutil.ReadAll(ctx.Request.Body)
-	if err != nil {
-		panic(err)
-	}
 	var ev domain.PushEvent
-	if err := json.Unmarshal(bs, &ev); err != nil {
+	if err := ctx.Bind(&ev); err != nil {
 		panic(err)
 	}
 	fs, err := whc.GitHubRepository.ChangedFiles(&ev)
