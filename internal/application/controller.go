@@ -3,6 +3,7 @@ package application
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/keitax/airlog/internal/domain"
+	"log"
 	"net/http"
 )
 
@@ -42,10 +43,18 @@ func (whc *WebhookController) Post(ctx *gin.Context) {
 	if err := ctx.Bind(&ev); err != nil {
 		panic(err)
 	}
+
+	log.Println("hello")
+
 	fs, err := whc.GitHubRepository.ChangedFiles(&ev)
 	if err != nil {
 		panic(err)
 	}
+
+	log.Println("world")
+
+	log.Printf("%v\n", fs)
+
 	for _, f := range fs {
 		if domain.IsPostFileName(f.Path) {
 			if err := whc.PostService.RegisterPost(f.Path, f.Content); err != nil {

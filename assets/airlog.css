@@ -87,6 +87,19 @@ a:link, a:visited {
     font-size: medium;
 }
 
+.post blockquote {
+    color: #999;
+}
+
+.post pre {
+    background: #eee;
+}
+
+.post code {
+    background: #eee;
+    font-size: 89%;
+}
+
 .post-list {
     padding: 0;
     line-height: 1.6;
