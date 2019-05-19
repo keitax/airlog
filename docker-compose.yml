@@ -2,7 +2,7 @@ version: '3'
 services:
   app:
     build: .
-    container_name: "airlog"
+    container_name: "airlog_app"
     tty: true
     ports:
     - "8080:8080"
