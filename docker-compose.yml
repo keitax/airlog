@@ -8,5 +8,17 @@ services:
     - "8080:8080"
     volumes:
     - .:/app
+    links:
+    - db
     env_file:
     - dev/env
+  db:
+    image: "mysql:5.7"
+    container_name: "airlog_db"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: blog
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+    - "3306:3306"
