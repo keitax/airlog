@@ -93,6 +93,7 @@ a:link, a:visited {
 
 .post pre {
     background: #eee;
+    overflow: scroll;
 }
 
 .post code {
