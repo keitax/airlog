@@ -60,11 +60,13 @@ func ExtractH1(content string) (string, string) {
 		if err != nil {
 			panic(err)
 		}
-		if ms := h1Regexp.FindStringSubmatch(string(line)); len(ms) > 1 {
-			h1 = ms[1]
-		} else {
-			fmt.Fprintln(buf, string(line))
+		if h1 == "" {
+			if ms := h1Regexp.FindStringSubmatch(string(line)); len(ms) > 1 {
+				h1 = ms[1]
+				continue
+			}
 		}
+		fmt.Fprintln(buf, string(line))
 	}
 	return h1, buf.String()
 }
