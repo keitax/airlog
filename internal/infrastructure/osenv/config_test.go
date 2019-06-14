@@ -1,10 +1,11 @@
 package osenv_test
 
 import (
-	"github.com/keitax/airlog/internal/application"
-	"github.com/keitax/airlog/internal/infrastructure/osenv"
-	. "github.com/onsi/gomega"
 	"os"
+
+	"github.com/keitam913/airlog/internal/application"
+	"github.com/keitam913/airlog/internal/infrastructure/osenv"
+	. "github.com/onsi/gomega"
 
 	. "github.com/onsi/ginkgo"
 )
@@ -12,8 +13,13 @@ import (
 var _ = Describe("Config", func() {
 	Describe("LoadConfig()", func() {
 		Context("without required environment vars", func() {
+			BeforeEach(func() {
+				os.Unsetenv("PORT")
+			})
+
 			It("occurs an error", func() {
 				conf, err := osenv.LoadConfig()
+				Expect(err).To(HaveOccurred())
 				Expect(err.Error()).To(ContainSubstring("missed env: PORT"))
 				Expect(conf).To(BeNil())
 			})

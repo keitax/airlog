@@ -2,12 +2,13 @@ package rds_test
 
 import (
 	"database/sql"
+	"time"
+
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/keitax/airlog/internal/domain"
-	"github.com/keitax/airlog/internal/infrastructure/rds"
+	"github.com/keitam913/airlog/internal/domain"
+	"github.com/keitam913/airlog/internal/infrastructure/rds"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"time"
 )
 
 var _ = Describe("PostRepository", func() {
@@ -17,7 +18,7 @@ var _ = Describe("PostRepository", func() {
 	)
 
 	BeforeEach(func() {
-		db_, err := sql.Open("mysql", "root@tcp(localhost:3306)/blog")
+		db_, err := sql.Open("mysql", "root:root@tcp(db:3306)/blog")
 		if err != nil {
 			panic(err)
 		}

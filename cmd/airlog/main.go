@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/keitax/airlog/internal/di"
+	"github.com/keitam913/airlog/internal/di"
 )
 
 func main() {

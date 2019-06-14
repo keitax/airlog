@@ -1,5 +1,5 @@
 PORT=8080
 AL_SITE_TITLE=Airlog
-AL_FOOTNOTE=Powered by [Airlog](https://github.com/keitax/airlog)
+AL_FOOTNOTE=Powered by [Airlog](https://github.com/keitam913/airlog)
 AL_BLOG_DSN=root:root@tcp(db:3306)/blog
-AL_GITHUB_API_POST_REPOSITORY_ENDPOINT=https://api.github.com/repos/keitax/blog-posts
+AL_GITHUB_API_POST_REPOSITORY_ENDPOINT=https://api.github.com/repos/keitam913/blog-posts

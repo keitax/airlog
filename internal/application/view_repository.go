@@ -2,7 +2,7 @@ package application
 
 import (
 	"fmt"
-	"github.com/keitax/airlog/internal/domain"
+	"github.com/keitam913/airlog/internal/domain"
 )
 
 type ViewRepository struct {

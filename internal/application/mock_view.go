@@ -6,7 +6,7 @@ package application
 
 import (
 	gomock "github.com/golang/mock/gomock"
-	domain "github.com/keitax/airlog/internal/domain"
+	domain "github.com/keitam913/airlog/internal/domain"
 	reflect "reflect"
 )
 

@@ -3,8 +3,8 @@ package ghapi_test
 import (
 	"fmt"
 	"github.com/golang/mock/gomock"
-	"github.com/keitax/airlog/internal/domain"
-	"github.com/keitax/airlog/internal/infrastructure/ghapi"
+	"github.com/keitam913/airlog/internal/domain"
+	"github.com/keitam913/airlog/internal/infrastructure/ghapi"
 	. "github.com/onsi/gomega"
 	"net/http"
 	"net/http/httptest"

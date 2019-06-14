@@ -2,7 +2,7 @@ package application
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/keitax/airlog/internal/domain"
+	"github.com/keitam913/airlog/internal/domain"
 	"net/http"
 )
 

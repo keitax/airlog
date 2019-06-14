@@ -3,7 +3,7 @@ package ghapi
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/keitax/airlog/internal/domain"
+	"github.com/keitam913/airlog/internal/domain"
 	"io/ioutil"
 	"net/http"
 )
