@@ -1,0 +1,9 @@
+#!/bin/sh
+
+mkdir -p tmp
+
+CGO_ENABLED=0 go build ./cmd/airlog
+
+tar -czf tmp/airlog.tgz airlog assets templates 
+
+rm airlog
