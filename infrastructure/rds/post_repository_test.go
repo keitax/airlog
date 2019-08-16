@@ -5,8 +5,8 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/keitam913/airlog/internal/domain"
-	"github.com/keitam913/airlog/internal/infrastructure/rds"
+	"github.com/keitam913/airlog/domain"
+	"github.com/keitam913/airlog/infrastructure/rds"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

@@ -2,7 +2,7 @@ package osenv
 
 import (
 	"fmt"
-	"github.com/keitam913/airlog/internal/application"
+	"github.com/keitam913/airlog/application"
 	"os"
 	"strings"
 )

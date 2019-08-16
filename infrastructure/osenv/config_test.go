@@ -3,8 +3,8 @@ package osenv_test
 import (
 	"os"
 
-	"github.com/keitam913/airlog/internal/application"
-	"github.com/keitam913/airlog/internal/infrastructure/osenv"
+	"github.com/keitam913/airlog/application"
+	"github.com/keitam913/airlog/infrastructure/osenv"
 	. "github.com/onsi/gomega"
 
 	. "github.com/onsi/ginkgo"

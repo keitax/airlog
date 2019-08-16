@@ -4,11 +4,11 @@ import (
 	"database/sql"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/keitam913/airlog/internal/application"
-	"github.com/keitam913/airlog/internal/domain"
-	"github.com/keitam913/airlog/internal/infrastructure/ghapi"
-	"github.com/keitam913/airlog/internal/infrastructure/osenv"
-	"github.com/keitam913/airlog/internal/infrastructure/rds"
+	"github.com/keitam913/airlog/application"
+	"github.com/keitam913/airlog/domain"
+	"github.com/keitam913/airlog/infrastructure/ghapi"
+	"github.com/keitam913/airlog/infrastructure/osenv"
+	"github.com/keitam913/airlog/infrastructure/rds"
 )
 
 type Container struct{}

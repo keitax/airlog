@@ -1,7 +1,7 @@
 package domain_test
 
 import (
-	"github.com/keitam913/airlog/internal/domain"
+	"github.com/keitam913/airlog/domain"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"time"

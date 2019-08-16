@@ -1,8 +1,8 @@
 package application_test
 
 import (
-	"github.com/keitam913/airlog/internal/application"
-	"github.com/keitam913/airlog/internal/domain"
+	"github.com/keitam913/airlog/application"
+	"github.com/keitam913/airlog/domain"
 	. "github.com/onsi/gomega"
 	"time"
 
