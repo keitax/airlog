@@ -4,6 +4,6 @@ WORKDIR /app
 
 RUN apk add --no-cache git
 
-CMD ["go", "run", "./cmd/airlog"]
+CMD ["go", "run", "."]
 
 EXPOSE 8080
