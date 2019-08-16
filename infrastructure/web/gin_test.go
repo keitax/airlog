@@ -1,16 +1,17 @@
-package application_test
+package web_test
 
 import (
 	"bytes"
-	"github.com/gin-gonic/gin"
-	"github.com/golang/mock/gomock"
-	"github.com/keitam913/airlog/application"
-	"github.com/keitam913/airlog/domain"
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
 	"net/http"
 	"net/http/httptest"
 	"os"
+
+	"github.com/gin-gonic/gin"
+	"github.com/golang/mock/gomock"
+	"github.com/keitam913/airlog/domain"
+	"github.com/keitam913/airlog/infrastructure/web"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("Gin", func() {
@@ -41,12 +42,12 @@ var _ = Describe("Gin", func() {
 		c = gomock.NewController(GinkgoT())
 		mpsvc = domain.NewMockPostService(c)
 		mghrepo = domain.NewMockGitHubRepository(c)
-		gineng = application.SetupGin(
-			&application.PostController{
+		gineng = web.SetupGin(
+			&web.PostController{
 				Service:        mpsvc,
-				ViewRepository: &application.ViewRepository{},
+				ViewRepository: &web.ViewRepository{},
 			},
-			&application.WebhookController{
+			&web.WebhookController{
 				PostService:      mpsvc,
 				GitHubRepository: mghrepo,
 			},

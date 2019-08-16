@@ -4,30 +4,30 @@ import (
 	"database/sql"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/keitam913/airlog/application"
 	"github.com/keitam913/airlog/domain"
 	"github.com/keitam913/airlog/infrastructure/ghapi"
 	"github.com/keitam913/airlog/infrastructure/osenv"
 	"github.com/keitam913/airlog/infrastructure/rds"
+	"github.com/keitam913/airlog/infrastructure/web"
 )
 
 type Container struct{}
 
 func (c Container) Gin() *gin.Engine {
-	g := application.SetupGin(c.PostController(), c.WebhookController())
+	g := web.SetupGin(c.PostController(), c.WebhookController())
 	g.Use(gin.Recovery(), gin.Logger())
 	return g
 }
 
-func (c Container) PostController() *application.PostController {
-	return &application.PostController{
+func (c Container) PostController() *web.PostController {
+	return &web.PostController{
 		Service:        c.PostService(),
 		ViewRepository: c.ViewRepository(),
 	}
 }
 
-func (c Container) WebhookController() *application.WebhookController {
-	return &application.WebhookController{
+func (c Container) WebhookController() *web.WebhookController {
+	return &web.WebhookController{
 		PostService:      c.PostService(),
 		GitHubRepository: c.GitHubRepository(),
 	}
@@ -45,8 +45,8 @@ func (c Container) PostRepository() domain.PostRepository {
 	}
 }
 
-func (c Container) ViewRepository() *application.ViewRepository {
-	return &application.ViewRepository{
+func (c Container) ViewRepository() *web.ViewRepository {
+	return &web.ViewRepository{
 		SiteTitle: c.Config().SiteTitle,
 		Footnote:  c.Config().Footnote,
 	}
@@ -66,7 +66,7 @@ func (c Container) DB() *sql.DB {
 	return db
 }
 
-func (c Container) Config() *application.Config {
+func (c Container) Config() *osenv.Config {
 	conf, err := osenv.LoadConfig()
 	if err != nil {
 		panic(err)

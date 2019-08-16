@@ -3,8 +3,8 @@ package osenv_test
 import (
 	"os"
 
-	"github.com/keitam913/airlog/application"
 	"github.com/keitam913/airlog/infrastructure/osenv"
+
 	. "github.com/onsi/gomega"
 
 	. "github.com/onsi/ginkgo"
@@ -49,7 +49,7 @@ var _ = Describe("Config", func() {
 			It("reads the env vars", func() {
 				conf, err := osenv.LoadConfig()
 				Expect(err).NotTo(HaveOccurred())
-				Expect(conf).To(Equal(&application.Config{
+				Expect(conf).To(Equal(&osenv.Config{
 					Port:                            "3000",
 					SiteTitle:                       "Airlog",
 					Footnote:                        "footnote",

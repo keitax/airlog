@@ -2,13 +2,20 @@ package osenv
 
 import (
 	"fmt"
-	"github.com/keitam913/airlog/application"
 	"os"
 	"strings"
 )
 
-func LoadConfig() (*application.Config, error) {
-	conf := &application.Config{}
+type Config struct {
+	Port                            string
+	SiteTitle                       string
+	Footnote                        string
+	BlogDSN                         string
+	GitHubAPIPostRepositoryEndpoint string
+}
+
+func LoadConfig() (*Config, error) {
+	conf := &Config{}
 	var missed []string
 	for _, prop := range []struct {
 		Field *string

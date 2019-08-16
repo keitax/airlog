@@ -1,10 +1,11 @@
-package application_test
+package web_test
 
 import (
-	"github.com/keitam913/airlog/application"
-	"github.com/keitam913/airlog/domain"
-	. "github.com/onsi/gomega"
 	"time"
+
+	"github.com/keitam913/airlog/domain"
+	"github.com/keitam913/airlog/infrastructure/web"
+	. "github.com/onsi/gomega"
 
 	. "github.com/onsi/ginkgo"
 )
@@ -12,7 +13,7 @@ import (
 var _ = Describe("View", func() {
 	Describe("GetPostURL()", func() {
 		It("gets a URL of a post", func() {
-			got := application.GetPostURL(&domain.Post{
+			got := web.GetPostURL(&domain.Post{
 				Filename: "20190101-hello-world.md",
 			})
 			Expect(got).To(Equal("/20190101-hello-world.html"))
@@ -25,7 +26,7 @@ var _ = Describe("View", func() {
 			if err != nil {
 				panic(err)
 			}
-			got := application.ShowDate(t)
+			got := web.ShowDate(t)
 			Expect(got).To(Equal("2019-01-01"))
 		})
 	})
