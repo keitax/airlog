@@ -4,10 +4,11 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
-	"gopkg.in/yaml.v2"
 	"io"
 	"regexp"
 	"time"
+
+	"gopkg.in/yaml.v2"
 )
 
 var (
@@ -20,8 +21,13 @@ func IsPostFileName(filename string) bool {
 	return filenameRegexp.MatchString(filename)
 }
 
-func GetTimestamp(filename string) time.Time {
-	ms := filenameRegexp.FindStringSubmatch(filename)
+type PostFile struct {
+	Filename string
+	Content  string
+}
+
+func (pf *PostFile) GetTimestamp() time.Time {
+	ms := filenameRegexp.FindStringSubmatch(pf.Filename)
 	if len(ms) < 2 {
 		panic(fmt.Errorf("must not happen: %v", ms))
 	}
@@ -32,10 +38,10 @@ func GetTimestamp(filename string) time.Time {
 	return t
 }
 
-func ExtractFrontMatter(content string) (map[string]interface{}, string) {
-	ms := frontMatterRegexp.FindStringSubmatch(content)
+func (pf *PostFile) ExtractFrontMatter() map[string]interface{} {
+	ms := frontMatterRegexp.FindStringSubmatch(pf.Content)
 	if len(ms) < 3 {
-		return map[string]interface{}{}, content
+		return map[string]interface{}{}
 	}
 	if len(ms) > 3 {
 		panic("BUG: must not happen")
@@ -43,13 +49,14 @@ func ExtractFrontMatter(content string) (map[string]interface{}, string) {
 	metadataSection, bodySection := ms[1], ms[2]
 	var metadata map[string]interface{}
 	if err := yaml.Unmarshal([]byte(metadataSection), &metadata); err != nil {
-		return map[string]interface{}{}, bodySection
+		return map[string]interface{}{}
 	}
-	return metadata, bodySection
+	pf.Content = bodySection
+	return metadata
 }
 
-func ExtractH1(content string) (string, string) {
-	r := bufio.NewReader(bytes.NewBufferString(content))
+func (pf *PostFile) ExtractH1() string {
+	r := bufio.NewReader(bytes.NewBufferString(pf.Content))
 	buf := &bytes.Buffer{}
 	var h1 string
 	for {
@@ -68,5 +75,6 @@ func ExtractH1(content string) (string, string) {
 		}
 		fmt.Fprintln(buf, string(line))
 	}
-	return h1, buf.String()
+	pf.Content = buf.String()
+	return h1
 }

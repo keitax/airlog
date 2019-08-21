@@ -1,10 +1,11 @@
 package domain_test
 
 import (
+	"time"
+
 	"github.com/keitam913/airlog/domain"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"time"
 )
 
 var _ = Describe("PostFile", func() {
@@ -20,7 +21,8 @@ var _ = Describe("PostFile", func() {
 
 	Describe("GetTimestamp()", func() {
 		It("parses a timestamp from a file name", func() {
-			got := domain.GetTimestamp("20190101-foo.md")
+			pf := &domain.PostFile{Filename: "20190101-foo.md"}
+			got := pf.GetTimestamp()
 			Expect(got.Year()).To(Equal(2019))
 			Expect(got.Month()).To(Equal(time.January))
 			Expect(got.Day()).To(Equal(1))
@@ -35,7 +37,8 @@ var _ = Describe("PostFile", func() {
 		)
 
 		JustBeforeEach(func() {
-			fm, body = domain.ExtractFrontMatter(content)
+			pf := &domain.PostFile{Content: content}
+			fm, body = pf.ExtractFrontMatter(), pf.Content
 		})
 
 		Context("when the content has a valid front matter", func() {
@@ -77,7 +80,8 @@ hello world`
 		)
 
 		JustBeforeEach(func() {
-			h1, rest = domain.ExtractH1(content)
+			pf := &domain.PostFile{Content: content}
+			h1, rest = pf.ExtractH1(), pf.Content
 		})
 
 		Context("when the content has a h1 line", func() {

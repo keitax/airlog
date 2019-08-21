@@ -34,14 +34,14 @@ func (ps *PostServiceImpl) Recent() ([]*Post, error) {
 }
 
 func (ps *PostServiceImpl) RegisterPost(filename, content string) error {
-	var body string
-	fm, body := ExtractFrontMatter(content)
-	h1, body := ExtractH1(body)
+	file := &PostFile{Filename: filename, Content: content}
+	fm := file.ExtractFrontMatter()
+	h1 := file.ExtractH1()
 	post := &Post{
 		Filename:  filename,
-		Timestamp: GetTimestamp(filename),
+		Timestamp: file.GetTimestamp(),
 		Title:     h1,
-		Body:      body,
+		Body:      file.Content,
 	}
 	if labels, ok := fm["labels"].([]interface{}); ok {
 		for _, label := range labels {
