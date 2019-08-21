@@ -69,3 +69,15 @@ func (m *MockPostService) RegisterPost(filename, content string) error {
 func (mr *MockPostServiceMockRecorder) RegisterPost(filename, content interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RegisterPost", reflect.TypeOf((*MockPostService)(nil).RegisterPost), filename, content)
 }
+
+// ConvertToPost mocks base method
+func (m *MockPostService) ConvertToPost(filename, content string) *Post {
+	ret := m.ctrl.Call(m, "ConvertToPost", filename, content)
+	ret0, _ := ret[0].(*Post)
+	return ret0
+}
+
+// ConvertToPost indicates an expected call of ConvertToPost
+func (mr *MockPostServiceMockRecorder) ConvertToPost(filename, content interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ConvertToPost", reflect.TypeOf((*MockPostService)(nil).ConvertToPost), filename, content)
+}
