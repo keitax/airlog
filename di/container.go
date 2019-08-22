@@ -24,7 +24,7 @@ func (c Container) Gin() *gin.Engine {
 
 func (c Container) PostController() *web.PostController {
 	return &web.PostController{
-		Service:        c.PostService(),
+		Service:        c.BlogService(),
 		ViewRepository: c.ViewRepository(),
 	}
 }
@@ -44,9 +44,7 @@ func (c Container) BlogService() blog.Service {
 }
 
 func (c Container) PostService() domain.PostService {
-	return &domain.PostServiceImpl{
-		Repository: c.PostRepository(),
-	}
+	return &domain.PostServiceImpl{}
 }
 
 func (c Container) PostRepository() domain.PostRepository {

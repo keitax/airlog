@@ -32,44 +32,6 @@ func (m *MockPostService) EXPECT() *MockPostServiceMockRecorder {
 	return m.recorder
 }
 
-// GetByHTMLFilename mocks base method
-func (m *MockPostService) GetByHTMLFilename(filename string) (*Post, error) {
-	ret := m.ctrl.Call(m, "GetByHTMLFilename", filename)
-	ret0, _ := ret[0].(*Post)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetByHTMLFilename indicates an expected call of GetByHTMLFilename
-func (mr *MockPostServiceMockRecorder) GetByHTMLFilename(filename interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByHTMLFilename", reflect.TypeOf((*MockPostService)(nil).GetByHTMLFilename), filename)
-}
-
-// Recent mocks base method
-func (m *MockPostService) Recent() ([]*Post, error) {
-	ret := m.ctrl.Call(m, "Recent")
-	ret0, _ := ret[0].([]*Post)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Recent indicates an expected call of Recent
-func (mr *MockPostServiceMockRecorder) Recent() *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recent", reflect.TypeOf((*MockPostService)(nil).Recent))
-}
-
-// RegisterPost mocks base method
-func (m *MockPostService) RegisterPost(filename, content string) error {
-	ret := m.ctrl.Call(m, "RegisterPost", filename, content)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// RegisterPost indicates an expected call of RegisterPost
-func (mr *MockPostServiceMockRecorder) RegisterPost(filename, content interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RegisterPost", reflect.TypeOf((*MockPostService)(nil).RegisterPost), filename, content)
-}
-
 // ConvertToPost mocks base method
 func (m *MockPostService) ConvertToPost(filename, content string) *Post {
 	ret := m.ctrl.Call(m, "ConvertToPost", filename, content)
