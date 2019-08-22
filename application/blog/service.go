@@ -12,11 +12,13 @@ type Service interface {
 	GetByHTMLFilename(filename string) (*domain.Post, error)
 	Recent() ([]*domain.Post, error)
 	RegisterPost(filename, content string) error
+	PushPost(event *domain.PushEvent) error
 }
 
 type ServiceImpl struct {
-	Service    domain.PostService
-	Repository domain.PostRepository
+	Service          domain.PostService
+	Repository       domain.PostRepository
+	GitHubRepository domain.GitHubRepository
 }
 
 func (ps *ServiceImpl) GetByHTMLFilename(filename string) (*domain.Post, error) {
@@ -39,4 +41,20 @@ func (ps *ServiceImpl) Recent() ([]*domain.Post, error) {
 func (ps *ServiceImpl) RegisterPost(filename, content string) error {
 	post := ps.Service.ConvertToPost(filename, content)
 	return ps.Repository.Put(post)
+}
+
+func (ps *ServiceImpl) PushPost(event *domain.PushEvent) error {
+	fs, err := ps.GitHubRepository.ChangedFiles(event)
+	if err != nil {
+		panic(err)
+	}
+	for _, f := range fs {
+		if domain.IsPostFileName(f.Path) {
+			post := ps.Service.ConvertToPost(f.Path, f.Content)
+			if err := ps.Repository.Put(post); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
 }

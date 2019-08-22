@@ -70,3 +70,15 @@ func (m *MockService) RegisterPost(filename, content string) error {
 func (mr *MockServiceMockRecorder) RegisterPost(filename, content interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RegisterPost", reflect.TypeOf((*MockService)(nil).RegisterPost), filename, content)
 }
+
+// PushPost mocks base method
+func (m *MockService) PushPost(event *domain.PushEvent) error {
+	ret := m.ctrl.Call(m, "PushPost", event)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// PushPost indicates an expected call of PushPost
+func (mr *MockServiceMockRecorder) PushPost(event interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PushPost", reflect.TypeOf((*MockService)(nil).PushPost), event)
+}

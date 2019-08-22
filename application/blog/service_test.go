@@ -17,15 +17,18 @@ var _ = Describe("Service", func() {
 		service *blog.ServiceImpl
 		mSvc    *domain.MockPostService
 		mrepo   *domain.MockPostRepository
+		mGHRepo *domain.MockGitHubRepository
 	)
 
 	BeforeEach(func() {
 		c = gomock.NewController(GinkgoT())
 		mSvc = domain.NewMockPostService(c)
 		mrepo = domain.NewMockPostRepository(c)
+		mGHRepo = domain.NewMockGitHubRepository(c)
 		service = &blog.ServiceImpl{
-			Repository: mrepo,
-			Service:    mSvc,
+			Repository:       mrepo,
+			Service:          mSvc,
+			GitHubRepository: mGHRepo,
 		}
 	})
 
@@ -71,10 +74,30 @@ var _ = Describe("Service", func() {
 		})
 	})
 
-	Describe("RegisterPost()", func() {
-		Context("when a service converts a post", func() {
+	Describe("PushPost()", func() {
+		Context("when some posts are changed", func() {
 			BeforeEach(func() {
-				mSvc.EXPECT().ConvertToPost("20190101-post.md", `---
+				mGHRepo.EXPECT().ChangedFiles(&domain.PushEvent{
+					BeforeCommitID: "<before>",
+					AfterCommitID:  "<after>",
+				}).AnyTimes().Return([]*domain.File{
+					{
+						Path: "20190101-post.md",
+						Content: `---
+labels: [label-a, label-b]
+---
+
+# Title
+
+content
+`,
+					},
+				}, nil)
+			})
+
+			Context("when a service converts those posts", func() {
+				BeforeEach(func() {
+					mSvc.EXPECT().ConvertToPost("20190101-post.md", `---
 labels: [label-a, label-b]
 ---
 
@@ -82,26 +105,26 @@ labels: [label-a, label-b]
 
 content
 `).AnyTimes().Return(&domain.Post{
-					Filename:  "20190101-post.md",
-					Timestamp: GetTimestamp("2019-01-01T00:00:00Z"),
-					Title:     "Title",
-					Body: `content
+						Filename:  "20190101-post.md",
+						Timestamp: GetTimestamp("2019-01-01T00:00:00Z"),
+						Title:     "Title",
+						Body: `content
 `,
-					Labels: []string{"label-a", "label-b"},
-				})
-			})
-
-			It("puts a post from the file", func() {
-				mrepo.EXPECT().Put(&domain.Post{
-					Filename:  "20190101-post.md",
-					Timestamp: GetTimestamp("2019-01-01T00:00:00Z"),
-					Title:     "Title",
-					Body: `content
-`,
-					Labels: []string{"label-a", "label-b"},
+						Labels: []string{"label-a", "label-b"},
+					})
 				})
 
-				service.RegisterPost("20190101-post.md", `---
+				It("puts a post from the file", func() {
+					mrepo.EXPECT().Put(&domain.Post{
+						Filename:  "20190101-post.md",
+						Timestamp: GetTimestamp("2019-01-01T00:00:00Z"),
+						Title:     "Title",
+						Body: `content
+`,
+						Labels: []string{"label-a", "label-b"},
+					})
+
+					service.RegisterPost("20190101-post.md", `---
 labels: [label-a, label-b]
 ---
 
@@ -109,9 +132,9 @@ labels: [label-a, label-b]
 
 content
 `)
+				})
 			})
 		})
-
 	})
 })
 
