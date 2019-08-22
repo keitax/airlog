@@ -12,7 +12,7 @@ type Service interface {
 	GetByHTMLFilename(filename string) (*domain.Post, error)
 	Recent() ([]*domain.Post, error)
 	RegisterPost(filename, content string) error
-	PushPost(event *domain.PushEvent) error
+	PushPosts(event *domain.PushEvent) error
 }
 
 type ServiceImpl struct {
@@ -43,7 +43,7 @@ func (ps *ServiceImpl) RegisterPost(filename, content string) error {
 	return ps.Repository.Put(post)
 }
 
-func (ps *ServiceImpl) PushPost(event *domain.PushEvent) error {
+func (ps *ServiceImpl) PushPosts(event *domain.PushEvent) error {
 	fs, err := ps.GitHubRepository.ChangedFiles(event)
 	if err != nil {
 		panic(err)

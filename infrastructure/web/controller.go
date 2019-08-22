@@ -44,15 +44,7 @@ func (whc *WebhookController) Post(ctx *gin.Context) {
 	if err := ctx.Bind(&ev); err != nil {
 		panic(err)
 	}
-	fs, err := whc.GitHubRepository.ChangedFiles(&ev)
-	if err != nil {
+	if err := whc.Service.PushPosts(&ev); err != nil {
 		panic(err)
-	}
-	for _, f := range fs {
-		if domain.IsPostFileName(f.Path) {
-			if err := whc.Service.RegisterPost(f.Path, f.Content); err != nil {
-				panic(err)
-			}
-		}
 	}
 }

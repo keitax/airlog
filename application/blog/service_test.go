@@ -74,7 +74,7 @@ var _ = Describe("Service", func() {
 		})
 	})
 
-	Describe("PushPost()", func() {
+	Describe("PushPosts()", func() {
 		Context("when some posts are changed", func() {
 			BeforeEach(func() {
 				mGHRepo.EXPECT().ChangedFiles(&domain.PushEvent{
@@ -124,14 +124,10 @@ content
 						Labels: []string{"label-a", "label-b"},
 					})
 
-					service.RegisterPost("20190101-post.md", `---
-labels: [label-a, label-b]
----
-
-# Title
-
-content
-`)
+					service.PushPosts(&domain.PushEvent{
+						BeforeCommitID: "<before>",
+						AfterCommitID:  "<after>",
+					})
 				})
 			})
 		})

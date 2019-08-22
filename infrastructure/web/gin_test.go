@@ -97,32 +97,22 @@ var _ = Describe("Gin", func() {
 	})
 
 	Describe("POST /webhook", func() {
-		Context("given changed files", func() {
-			BeforeEach(func() {
-				mghrepo.EXPECT().ChangedFiles(&domain.PushEvent{
-					BeforeCommitID: "<before-commit-id>",
-					AfterCommitID:  "<after-commit-id>",
-				}).AnyTimes().Return([]*domain.File{
-					{"20190101-a.md", "body-a"},
-					{"20190102-b.md", "body-b"},
-				}, nil)
+		Context("when takes a push event", func() {
+			AfterEach(func() {
+				req := httptest.NewRequest(
+					http.MethodPost,
+					"/webhook",
+					bytes.NewBufferString(`{"before":"<before-commit-id>","after":"<after-commit-id>"}`),
+				)
+				req.Header.Set("Content-Type", "application/json")
+				gineng.ServeHTTP(resrec, req)
 			})
 
-			Context("when takes a push event", func() {
-				AfterEach(func() {
-					req := httptest.NewRequest(
-						http.MethodPost,
-						"/webhook",
-						bytes.NewBufferString(`{"before":"<before-commit-id>","after":"<after-commit-id>"}`),
-					)
-					req.Header.Set("Content-Type", "application/json")
-					gineng.ServeHTTP(resrec, req)
-				})
-
-				It("registers the changed files", func() {
-					mBlogSvc.EXPECT().RegisterPost("20190101-a.md", "body-a").Return(nil)
-					mBlogSvc.EXPECT().RegisterPost("20190102-b.md", "body-b").Return(nil)
-				})
+			It("registers the changed files", func() {
+				mBlogSvc.EXPECT().PushPosts(&domain.PushEvent{
+					BeforeCommitID: "<before-commit-id>",
+					AfterCommitID:  "<after-commit-id>",
+				}).Return(nil)
 			})
 		})
 	})
