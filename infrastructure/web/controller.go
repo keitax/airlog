@@ -1,13 +1,15 @@
 package web
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/keitam913/airlog/domain"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/keitam913/airlog/application/blog"
+	"github.com/keitam913/airlog/domain"
 )
 
 type PostController struct {
-	Service        domain.PostService
+	Service        blog.Service
 	ViewRepository *ViewRepository
 }
 
@@ -33,7 +35,7 @@ func (pc *PostController) List(ctx *gin.Context) {
 }
 
 type WebhookController struct {
-	PostService      domain.PostService
+	Service          blog.Service
 	GitHubRepository domain.GitHubRepository
 }
 
@@ -48,7 +50,7 @@ func (whc *WebhookController) Post(ctx *gin.Context) {
 	}
 	for _, f := range fs {
 		if domain.IsPostFileName(f.Path) {
-			if err := whc.PostService.RegisterPost(f.Path, f.Content); err != nil {
+			if err := whc.Service.RegisterPost(f.Path, f.Content); err != nil {
 				panic(err)
 			}
 		}

@@ -6,6 +6,8 @@ import (
 	"net/http/httptest"
 	"os"
 
+	"github.com/keitam913/airlog/application/blog"
+
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
 	"github.com/keitam913/airlog/domain"
@@ -16,12 +18,12 @@ import (
 
 var _ = Describe("Gin", func() {
 	var (
-		c       *gomock.Controller
-		mpsvc   *domain.MockPostService
-		mghrepo *domain.MockGitHubRepository
-		gineng  *gin.Engine
-		resrec  *httptest.ResponseRecorder
-		origDir string
+		c        *gomock.Controller
+		mBlogSvc *blog.MockService
+		mghrepo  *domain.MockGitHubRepository
+		gineng   *gin.Engine
+		resrec   *httptest.ResponseRecorder
+		origDir  string
 	)
 
 	BeforeEach(func() {
@@ -40,15 +42,15 @@ var _ = Describe("Gin", func() {
 
 	BeforeEach(func() {
 		c = gomock.NewController(GinkgoT())
-		mpsvc = domain.NewMockPostService(c)
+		mBlogSvc = blog.NewMockService(c)
 		mghrepo = domain.NewMockGitHubRepository(c)
 		gineng = web.SetupGin(
 			&web.PostController{
-				Service:        mpsvc,
+				Service:        mBlogSvc,
 				ViewRepository: &web.ViewRepository{},
 			},
 			&web.WebhookController{
-				PostService:      mpsvc,
+				Service:          mBlogSvc,
 				GitHubRepository: mghrepo,
 			},
 		)
@@ -71,7 +73,7 @@ var _ = Describe("Gin", func() {
 	Describe("GET /:filename", func() {
 		Context("when a post is available", func() {
 			BeforeEach(func() {
-				mpsvc.EXPECT().GetByHTMLFilename("20190101-title.html").AnyTimes().Return(
+				mBlogSvc.EXPECT().GetByHTMLFilename("20190101-title.html").AnyTimes().Return(
 					&domain.Post{
 						Filename: "20190101-title.md",
 						Title:    "Title",
@@ -118,8 +120,8 @@ var _ = Describe("Gin", func() {
 				})
 
 				It("registers the changed files", func() {
-					mpsvc.EXPECT().RegisterPost("20190101-a.md", "body-a").Return(nil)
-					mpsvc.EXPECT().RegisterPost("20190102-b.md", "body-b").Return(nil)
+					mBlogSvc.EXPECT().RegisterPost("20190101-a.md", "body-a").Return(nil)
+					mBlogSvc.EXPECT().RegisterPost("20190102-b.md", "body-b").Return(nil)
 				})
 			})
 		})

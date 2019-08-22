@@ -2,6 +2,9 @@ package di
 
 import (
 	"database/sql"
+
+	"github.com/keitam913/airlog/application/blog"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/keitam913/airlog/domain"
@@ -28,8 +31,15 @@ func (c Container) PostController() *web.PostController {
 
 func (c Container) WebhookController() *web.WebhookController {
 	return &web.WebhookController{
-		PostService:      c.PostService(),
+		Service:          c.BlogService(),
 		GitHubRepository: c.GitHubRepository(),
+	}
+}
+
+func (c Container) BlogService() blog.Service {
+	return &blog.ServiceImpl{
+		Service:    c.PostService(),
+		Repository: c.PostRepository(),
 	}
 }
 
