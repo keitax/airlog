@@ -11,7 +11,6 @@ import (
 type Service interface {
 	GetByHTMLFilename(filename string) (*domain.Post, error)
 	Recent() ([]*domain.Post, error)
-	RegisterPost(filename, content string) error
 	PushPosts(event *domain.PushEvent) error
 }
 
@@ -36,11 +35,6 @@ func (ps *ServiceImpl) Recent() ([]*domain.Post, error) {
 		return nil, err
 	}
 	return recent, nil
-}
-
-func (ps *ServiceImpl) RegisterPost(filename, content string) error {
-	post := ps.Service.ConvertToPost(filename, content)
-	return ps.Repository.Put(post)
 }
 
 func (ps *ServiceImpl) PushPosts(event *domain.PushEvent) error {
