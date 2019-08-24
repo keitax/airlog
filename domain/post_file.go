@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"regexp"
+	"strings"
 	"time"
 
 	"gopkg.in/yaml.v2"
@@ -57,7 +58,7 @@ func (pf *PostFile) ExtractFrontMatter() map[string]interface{} {
 
 func (pf *PostFile) ExtractH1() string {
 	r := bufio.NewReader(bytes.NewBufferString(pf.Content))
-	buf := &bytes.Buffer{}
+	var sb strings.Builder
 	var h1 string
 	for {
 		line, _, err := r.ReadLine()
@@ -73,8 +74,9 @@ func (pf *PostFile) ExtractH1() string {
 				continue
 			}
 		}
-		fmt.Fprintln(buf, string(line))
+		sb.Write(line)
+		sb.WriteByte('\n')
 	}
-	pf.Content = buf.String()
+	pf.Content = sb.String()
 	return h1
 }
