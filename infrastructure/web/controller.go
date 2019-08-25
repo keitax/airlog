@@ -36,7 +36,7 @@ func (pc *PostController) List(ctx *gin.Context) {
 
 type WebhookController struct {
 	Service          blog.Service
-	GitHubRepository domain.GitHubRepository
+	PostFileRepository domain.PostFileRepository
 }
 
 func (whc *WebhookController) Post(ctx *gin.Context) {

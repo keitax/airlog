@@ -20,7 +20,7 @@ var _ = Describe("Gin", func() {
 	var (
 		c        *gomock.Controller
 		mBlogSvc *blog.MockService
-		mghrepo  *domain.MockGitHubRepository
+		mFRepo   *domain.MockPostFileRepository
 		gineng   *gin.Engine
 		resrec   *httptest.ResponseRecorder
 		origDir  string
@@ -43,15 +43,15 @@ var _ = Describe("Gin", func() {
 	BeforeEach(func() {
 		c = gomock.NewController(GinkgoT())
 		mBlogSvc = blog.NewMockService(c)
-		mghrepo = domain.NewMockGitHubRepository(c)
+		mFRepo = domain.NewMockPostFileRepository(c)
 		gineng = web.SetupGin(
 			&web.PostController{
 				Service:        mBlogSvc,
 				ViewRepository: &web.ViewRepository{},
 			},
 			&web.WebhookController{
-				Service:          mBlogSvc,
-				GitHubRepository: mghrepo,
+				Service:            mBlogSvc,
+				PostFileRepository: mFRepo,
 			},
 		)
 		resrec = httptest.NewRecorder()

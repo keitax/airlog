@@ -17,18 +17,18 @@ var _ = Describe("Service", func() {
 		service *blog.ServiceImpl
 		mSvc    *domain.MockPostService
 		mrepo   *domain.MockPostRepository
-		mGHRepo *domain.MockGitHubRepository
+		mFRepo  *domain.MockPostFileRepository
 	)
 
 	BeforeEach(func() {
 		c = gomock.NewController(GinkgoT())
 		mSvc = domain.NewMockPostService(c)
 		mrepo = domain.NewMockPostRepository(c)
-		mGHRepo = domain.NewMockGitHubRepository(c)
+		mFRepo = domain.NewMockPostFileRepository(c)
 		service = &blog.ServiceImpl{
-			Repository:       mrepo,
-			Service:          mSvc,
-			GitHubRepository: mGHRepo,
+			Repository:         mrepo,
+			Service:            mSvc,
+			PostFileRepository: mFRepo,
 		}
 	})
 
@@ -77,7 +77,7 @@ var _ = Describe("Service", func() {
 	Describe("PushPosts()", func() {
 		Context("when some posts are changed", func() {
 			BeforeEach(func() {
-				mGHRepo.EXPECT().ChangedFiles(&domain.PushEvent{
+				mFRepo.EXPECT().ChangedFiles(&domain.PushEvent{
 					BeforeCommitID: "<before>",
 					AfterCommitID:  "<after>",
 				}).AnyTimes().Return([]*domain.File{

@@ -8,12 +8,12 @@ import (
 	"net/http"
 )
 
-type GitHubRepository struct {
+type PostFileRepository struct {
 	GitHubAPIPostRepositoryEndpoint string
 }
 
-func (ghRepo *GitHubRepository) ChangedFiles(event *domain.PushEvent) ([]*domain.File, error) {
-	res, err := http.Get(fmt.Sprintf("%s/compare/%s...%s", ghRepo.GitHubAPIPostRepositoryEndpoint, event.BeforeCommitID, event.AfterCommitID))
+func (pfRepo *PostFileRepository) ChangedFiles(event *domain.PushEvent) ([]*domain.File, error) {
+	res, err := http.Get(fmt.Sprintf("%s/compare/%s...%s", pfRepo.GitHubAPIPostRepositoryEndpoint, event.BeforeCommitID, event.AfterCommitID))
 	if err != nil {
 		return nil, err
 	}

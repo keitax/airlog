@@ -17,7 +17,7 @@ type Service interface {
 type ServiceImpl struct {
 	Service          domain.PostService
 	Repository       domain.PostRepository
-	GitHubRepository domain.GitHubRepository
+	PostFileRepository domain.PostFileRepository
 }
 
 func (ps *ServiceImpl) GetByHTMLFilename(filename string) (*domain.Post, error) {
@@ -38,7 +38,7 @@ func (ps *ServiceImpl) Recent() ([]*domain.Post, error) {
 }
 
 func (ps *ServiceImpl) PushPosts(event *domain.PushEvent) error {
-	fs, err := ps.GitHubRepository.ChangedFiles(event)
+	fs, err := ps.PostFileRepository.ChangedFiles(event)
 	if err != nil {
 		panic(err)
 	}

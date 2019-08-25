@@ -15,7 +15,7 @@ import (
 var _ = Describe("Repository", func() {
 	var (
 		c         *gomock.Controller
-		ghRepo    *ghapi.GitHubRepository
+		pfRepo    *ghapi.PostFileRepository
 		mockGHAPI *httptest.Server
 	)
 
@@ -31,7 +31,7 @@ var _ = Describe("Repository", func() {
 	})
 
 	JustBeforeEach(func() {
-		ghRepo = &ghapi.GitHubRepository{
+		pfRepo = &ghapi.PostFileRepository{
 			GitHubAPIPostRepositoryEndpoint: mockGHAPI.URL,
 		}
 	})
@@ -44,7 +44,7 @@ var _ = Describe("Repository", func() {
 		)
 
 		JustBeforeEach(func() {
-			gotFs, gotErr = ghRepo.ChangedFiles(givenPushEvent)
+			gotFs, gotErr = pfRepo.ChangedFiles(givenPushEvent)
 		})
 
 		Context("when the GitHub compare api responses changed file info", func() {

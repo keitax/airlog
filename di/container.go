@@ -32,7 +32,7 @@ func (c Container) PostController() *web.PostController {
 func (c Container) WebhookController() *web.WebhookController {
 	return &web.WebhookController{
 		Service:          c.BlogService(),
-		GitHubRepository: c.GitHubRepository(),
+		PostFileRepository: c.PostFileRepository(),
 	}
 }
 
@@ -60,8 +60,8 @@ func (c Container) ViewRepository() *web.ViewRepository {
 	}
 }
 
-func (c Container) GitHubRepository() domain.GitHubRepository {
-	return &ghapi.GitHubRepository{
+func (c Container) PostFileRepository() domain.PostFileRepository {
+	return &ghapi.PostFileRepository{
 		GitHubAPIPostRepositoryEndpoint: c.Config().GitHubAPIPostRepositoryEndpoint,
 	}
 }
