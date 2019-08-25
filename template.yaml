@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  keitam-blog
+
+  Sample SAM Template for keitam-blog
+
+Globals:
+  Function:
+    Timeout: 5
+
+Resources:
+  AirlogFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: airlog
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+      Environment:
+        Variables:
+          PARAM1: VALUE
+
+Outputs:
+  AirlogAPI:
+    Description: "API Gateway endpoint URL for Prod environment for Airlog Function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  AirlogFunction:
+    Description: "Airlog Function ARN"
+    Value: !GetAtt AirlogFunction.Arn
+  AirlogFunctionIamRole:
+    Description: "Implicit IAM Role created for Airlog Function"
+    Value: !GetAtt AirlogFunctionRole.Arn
