@@ -3,6 +3,8 @@ package di
 import (
 	"database/sql"
 
+	"github.com/keitam913/airlog/infrastructure/apigatewayproxy"
+
 	"github.com/keitam913/airlog/application/blog"
 
 	"github.com/gin-gonic/gin"
@@ -15,6 +17,10 @@ import (
 )
 
 type Container struct{}
+
+func (c Container) APIGatewayProxyHandler() *apigatewayproxy.Handler {
+	return apigatewayproxy.NewHandler(c.Gin())
+}
 
 func (c Container) Gin() *gin.Engine {
 	g := web.SetupGin(c.PostController(), c.WebhookController())
@@ -31,7 +37,7 @@ func (c Container) PostController() *web.PostController {
 
 func (c Container) WebhookController() *web.WebhookController {
 	return &web.WebhookController{
-		Service:          c.BlogService(),
+		Service:            c.BlogService(),
 		PostFileRepository: c.PostFileRepository(),
 	}
 }
