@@ -5,7 +5,7 @@ package blog
 import (
 	"strings"
 
-	"github.com/keitam913/airlog/domain"
+	"github.com/keitam913/textvid/domain"
 )
 
 type Service interface {

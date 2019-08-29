@@ -3,8 +3,8 @@ package web_test
 import (
 	"time"
 
-	"github.com/keitam913/airlog/domain"
-	"github.com/keitam913/airlog/infrastructure/web"
+	"github.com/keitam913/textvid/domain"
+	"github.com/keitam913/textvid/infrastructure/web"
 	. "github.com/onsi/gomega"
 
 	. "github.com/onsi/ginkgo"

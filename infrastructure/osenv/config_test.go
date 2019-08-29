@@ -3,7 +3,7 @@ package osenv_test
 import (
 	"os"
 
-	"github.com/keitam913/airlog/infrastructure/osenv"
+	"github.com/keitam913/textvid/infrastructure/osenv"
 
 	. "github.com/onsi/gomega"
 
@@ -28,10 +28,10 @@ var _ = Describe("Config", func() {
 		Context("with valid environment vars", func() {
 			env := map[string]string{
 				"PORT":                                   "3000",
-				"AL_SITE_TITLE":                          "Airlog",
-				"AL_FOOTNOTE":                            "footnote",
-				"AL_BLOG_DSN":                            "root@tcp(localhost:3306)/blog",
-				"AL_GITHUB_API_POST_REPOSITORY_ENDPOINT": "https://api.github.com/repos/user/posts",
+				"TV_SITE_TITLE":                          "Textvid",
+				"TV_FOOTNOTE":                            "footnote",
+				"TV_BLOG_DSN":                            "root@tcp(localhost:3306)/blog",
+				"TV_GITHUB_API_POST_REPOSITORY_ENDPOINT": "https://api.github.com/repos/user/posts",
 			}
 
 			BeforeEach(func() {
@@ -51,7 +51,7 @@ var _ = Describe("Config", func() {
 				Expect(err).NotTo(HaveOccurred())
 				Expect(conf).To(Equal(&osenv.Config{
 					Port:                            "3000",
-					SiteTitle:                       "Airlog",
+					SiteTitle:                       "Textvid",
 					Footnote:                        "footnote",
 					BlogDSN:                         "root@tcp(localhost:3306)/blog",
 					GitHubAPIPostRepositoryEndpoint: "https://api.github.com/repos/user/posts",

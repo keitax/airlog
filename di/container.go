@@ -3,17 +3,17 @@ package di
 import (
 	"database/sql"
 
-	"github.com/keitam913/airlog/infrastructure/apigatewayproxy"
+	"github.com/keitam913/textvid/infrastructure/apigatewayproxy"
 
-	"github.com/keitam913/airlog/application/blog"
+	"github.com/keitam913/textvid/application/blog"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/keitam913/airlog/domain"
-	"github.com/keitam913/airlog/infrastructure/ghapi"
-	"github.com/keitam913/airlog/infrastructure/osenv"
-	"github.com/keitam913/airlog/infrastructure/rds"
-	"github.com/keitam913/airlog/infrastructure/web"
+	"github.com/keitam913/textvid/domain"
+	"github.com/keitam913/textvid/infrastructure/ghapi"
+	"github.com/keitam913/textvid/infrastructure/osenv"
+	"github.com/keitam913/textvid/infrastructure/rds"
+	"github.com/keitam913/textvid/infrastructure/web"
 )
 
 type Container struct{}

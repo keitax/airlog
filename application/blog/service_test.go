@@ -3,10 +3,10 @@ package blog_test
 import (
 	"time"
 
-	"github.com/keitam913/airlog/application/blog"
+	"github.com/keitam913/textvid/application/blog"
 
 	"github.com/golang/mock/gomock"
-	"github.com/keitam913/airlog/domain"
+	"github.com/keitam913/textvid/domain"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

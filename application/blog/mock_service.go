@@ -6,7 +6,7 @@ package blog
 
 import (
 	gomock "github.com/golang/mock/gomock"
-	domain "github.com/keitam913/airlog/domain"
+	domain "github.com/keitam913/textvid/domain"
 	reflect "reflect"
 )
 

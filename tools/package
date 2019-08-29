@@ -2,8 +2,8 @@
 
 mkdir -p tmp
 
-CGO_ENABLED=0 go build ./cmd/airlog
+CGO_ENABLED=0 go build ./cmd/textvid
 
-tar -czf tmp/airlog.tgz airlog assets templates 
+tar -czf tmp/textvid.tgz textvid assets templates 
 
-rm airlog
+rm textvid

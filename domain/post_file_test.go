@@ -3,7 +3,7 @@ package domain_test
 import (
 	"time"
 
-	"github.com/keitam913/airlog/domain"
+	"github.com/keitam913/textvid/domain"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

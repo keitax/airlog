@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/keitam913/airlog/application/blog"
-	"github.com/keitam913/airlog/domain"
+	"github.com/keitam913/textvid/application/blog"
+	"github.com/keitam913/textvid/domain"
 )
 
 type PostController struct {

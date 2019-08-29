@@ -2,7 +2,7 @@ package web
 
 import (
 	"fmt"
-	"github.com/keitam913/airlog/domain"
+	"github.com/keitam913/textvid/domain"
 	"github.com/russross/blackfriday"
 	"html/template"
 	"net/http"

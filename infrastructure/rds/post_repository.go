@@ -2,7 +2,7 @@ package rds
 
 import (
 	"database/sql"
-	"github.com/keitam913/airlog/domain"
+	"github.com/keitam913/textvid/domain"
 	"time"
 )
 

@@ -9,11 +9,11 @@ Globals:
   Function:
     Timeout: 5
 Resources:
-  AirlogFunction:
+  TextvidFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://airlog-lambda/e2828f4c95715af1718dfb49145a3b9f
-      Handler: airlog
+      CodeUri: s3://textvid-lambda/e2828f4c95715af1718dfb49145a3b9f
+      Handler: textvid
       Runtime: go1.x
       Tracing: Active
       Events:
@@ -26,19 +26,19 @@ Resources:
         Variables:
           PARAM1: VALUE
 Outputs:
-  AirlogAPI:
-    Description: API Gateway endpoint URL for Prod environment for Airlog Function
+  TextvidAPI:
+    Description: API Gateway endpoint URL for Prod environment for Textvid Function
     Value:
       Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
-  AirlogFunction:
-    Description: Airlog Function ARN
+  TextvidFunction:
+    Description: Textvid Function ARN
     Value:
       Fn::GetAtt:
-      - AirlogFunction
+      - TextvidFunction
       - Arn
-  AirlogFunctionIamRole:
-    Description: Implicit IAM Role created for Airlog Function
+  TextvidFunctionIamRole:
+    Description: Implicit IAM Role created for Textvid Function
     Value:
       Fn::GetAtt:
-      - AirlogFunctionRole
+      - TextvidFunctionRole
       - Arn

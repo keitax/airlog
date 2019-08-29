@@ -4,7 +4,7 @@ deps:
 	go mod tidy
 
 clean: 
-	rm -rf airlog
+	rm -rf textvid
 
 build:
-	cd airlog && GOOS=linux GOARCH=amd64 go build -o airlog .
+	cd textvid && GOOS=linux GOARCH=amd64 go build -o textvid .

@@ -22,10 +22,10 @@ func LoadConfig() (*Config, error) {
 		Name  string
 	}{
 		{&conf.Port, "PORT"},
-		{&conf.SiteTitle, "AL_SITE_TITLE"},
-		{&conf.Footnote, "AL_FOOTNOTE"},
-		{&conf.BlogDSN, "AL_BLOG_DSN"},
-		{&conf.GitHubAPIPostRepositoryEndpoint, "AL_GITHUB_API_POST_REPOSITORY_ENDPOINT"},
+		{&conf.SiteTitle, "TV_SITE_TITLE"},
+		{&conf.Footnote, "TV_FOOTNOTE"},
+		{&conf.BlogDSN, "TV_BLOG_DSN"},
+		{&conf.GitHubAPIPostRepositoryEndpoint, "TV_GITHUB_API_POST_REPOSITORY_ENDPOINT"},
 	} {
 		v := os.Getenv(prop.Name)
 		if v == "" {

@@ -1,4 +1,4 @@
-module github.com/keitam913/airlog
+module github.com/keitam913/textvid
 
 go 1.12
 

@@ -6,12 +6,12 @@ import (
 	"net/http/httptest"
 	"os"
 
-	"github.com/keitam913/airlog/application/blog"
+	"github.com/keitam913/textvid/application/blog"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
-	"github.com/keitam913/airlog/domain"
-	"github.com/keitam913/airlog/infrastructure/web"
+	"github.com/keitam913/textvid/domain"
+	"github.com/keitam913/textvid/infrastructure/web"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

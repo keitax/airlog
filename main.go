@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/aws/aws-lambda-go/lambda"
 
-	"github.com/keitam913/airlog/di"
+	"github.com/keitam913/textvid/di"
 )
 
 func main() {

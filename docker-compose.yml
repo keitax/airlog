@@ -2,7 +2,7 @@ version: '3'
 services:
   app:
     build: .
-    container_name: "airlog_app"
+    container_name: "textvid_app"
     ports:
     - "8080:8080"
     volumes:
@@ -13,7 +13,7 @@ services:
     - dev/env
   db:
     image: "mysql:5.7"
-    container_name: "airlog_db"
+    container_name: "textvid_db"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: blog

@@ -10,11 +10,11 @@ Globals:
     Timeout: 5
 
 Resources:
-  AirlogRootFunction:
+  TextvidRootFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      Handler: airlog
+      Handler: textvid
       Runtime: go1.x
       Tracing: Active
       Events:
@@ -24,17 +24,17 @@ Resources:
             Path: /
             Method: ANY
       Environment:
-        Variables: &AirlogEnv
+        Variables: &TextvidEnv
           PORT: 3000
-          AL_SITE_TITLE: Airlog
-          AL_FOOTNOTE: Powered by [Airlog](https://github.com/keitam913/airlog)
-          AL_BLOG_DSN: root:root@tcp(airlog_db:3306)/blog
-          AL_GITHUB_API_POST_REPOSITORY_ENDPOINT: https://api.github.com/repos/keitam913/blog-posts
-  AirlogSubFunction:
+          TV_SITE_TITLE: Textvid
+          TV_FOOTNOTE: Powered by [Textvid](https://github.com/keitam913/textvid)
+          TV_BLOG_DSN: root:root@tcp(textvid_db:3306)/blog
+          TV_GITHUB_API_POST_REPOSITORY_ENDPOINT: https://api.github.com/repos/keitam913/blog-posts
+  TextvidSubFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      Handler: airlog
+      Handler: textvid
       Runtime: go1.x
       Tracing: Active
       Events:
@@ -45,4 +45,4 @@ Resources:
             Method: ANY
       Environment:
         Variables:
-          <<: *AirlogEnv
+          <<: *TextvidEnv
