@@ -38,15 +38,15 @@ func (c Container) PostController() *web.PostController {
 
 func (c Container) WebhookController() *web.WebhookController {
 	return &web.WebhookController{
-		Service:            c.BlogService(),
-		PostFileRepository: c.PostFileRepository(),
+		Service: c.BlogService(),
 	}
 }
 
 func (c Container) BlogService() blog.Service {
 	return &blog.ServiceImpl{
-		Service:    c.PostService(),
-		Repository: c.PostRepository(),
+		Service:            c.PostService(),
+		Repository:         c.PostRepository(),
+		PostFileRepository: c.PostFileRepository(),
 	}
 }
 
