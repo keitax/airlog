@@ -13,8 +13,8 @@ type Post struct {
 	Labels   []string
 }
 
-func (pf *Post) GetTimestamp() time.Time {
-	ms := filenameRegexp.FindStringSubmatch(pf.Filename)
+func (p *Post) Timestamp() time.Time {
+	ms := filenameRegexp.FindStringSubmatch(p.Filename)
 	if len(ms) < 2 {
 		panic(fmt.Errorf("must not happen: %v", ms))
 	}
@@ -23,13 +23,4 @@ func (pf *Post) GetTimestamp() time.Time {
 		panic(err) // must not happen
 	}
 	return t
-}
-
-type ErrNotFound struct {
-	error
-}
-
-type PushEvent struct {
-	BeforeCommitID string `json:"before"`
-	AfterCommitID  string `json:"after"`
 }
