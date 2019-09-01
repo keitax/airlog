@@ -2,7 +2,6 @@ package di
 
 import (
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	awsdynamodb "github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/keitam913/textvid/infrastructure/apigatewayproxy"
@@ -56,16 +55,28 @@ func (c Container) PostService() domain.PostService {
 }
 
 func (c Container) PostRepository() domain.PostRepository {
+	conf := c.Config()
+	if conf.Mode == "local" {
+		return &dynamodb.PostRepository{
+			DB: c.DynamoDBLocal(),
+		}
+	}
 	return &dynamodb.PostRepository{
 		DB: c.DynamoDB(),
 	}
 }
 
 func (c Container) DynamoDB() *awsdynamodb.DynamoDB {
-	conf := c.Config()
+	return awsdynamodb.New(session.Must(session.NewSessionWithOptions(session.Options{
+		SharedConfigState: session.SharedConfigEnable,
+	})))
+}
+
+func (c Container) DynamoDBLocal() *awsdynamodb.DynamoDB {
 	return awsdynamodb.New(session.Must(session.NewSessionWithOptions(session.Options{
 		Config: aws.Config{
-			Credentials: credentials.NewStaticCredentials(conf.AWSAccessKeyID, conf.AWSSecretAccessKey, ""),
+			Region:   aws.String("local"),
+			Endpoint: aws.String("http://dynamodb:8000"),
 		},
 	})))
 }
