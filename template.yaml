@@ -25,11 +25,10 @@ Resources:
             Method: ANY
       Environment:
         Variables: &TextvidEnv
-          PORT: 3000
           TV_SITE_TITLE: Textvid
           TV_FOOTNOTE: Powered by [Textvid](https://github.com/keitam913/textvid)
-          TV_BLOG_DSN: root:root@tcp(textvid_db:3306)/blog
           TV_GITHUB_API_POST_REPOSITORY_ENDPOINT: https://api.github.com/repos/keitam913/blog-posts
+          TV_MODE: cloud
   TextvidSubFunction:
     Type: AWS::Serverless::Function
     Properties:

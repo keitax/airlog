@@ -30,6 +30,7 @@ var _ = Describe("Config", func() {
 				"TV_SITE_TITLE":                          "Textvid",
 				"TV_FOOTNOTE":                            "footnote",
 				"TV_GITHUB_API_POST_REPOSITORY_ENDPOINT": "https://api.github.com/repos/user/posts",
+				"TV_MODE":                                "local",
 			}
 
 			BeforeEach(func() {
@@ -51,6 +52,7 @@ var _ = Describe("Config", func() {
 					SiteTitle:                       "Textvid",
 					Footnote:                        "footnote",
 					GitHubAPIPostRepositoryEndpoint: "https://api.github.com/repos/user/posts",
+					Mode:                            "local",
 				}))
 			})
 		})

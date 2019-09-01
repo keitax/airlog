@@ -10,6 +10,7 @@ type Config struct {
 	SiteTitle                       string
 	Footnote                        string
 	GitHubAPIPostRepositoryEndpoint string
+	Mode                            string
 }
 
 func LoadConfig() (*Config, error) {
@@ -22,6 +23,7 @@ func LoadConfig() (*Config, error) {
 		{&conf.SiteTitle, "TV_SITE_TITLE"},
 		{&conf.Footnote, "TV_FOOTNOTE"},
 		{&conf.GitHubAPIPostRepositoryEndpoint, "TV_GITHUB_API_POST_REPOSITORY_ENDPOINT"},
+		{&conf.Mode, "TV_MODE"},
 	} {
 		v := os.Getenv(prop.Name)
 		if v == "" {
