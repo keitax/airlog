@@ -19,8 +19,3 @@ type PushEvent struct {
 	BeforeCommitID string `json:"before"`
 	AfterCommitID  string `json:"after"`
 }
-
-type File struct {
-	Path    string
-	Content string
-}
