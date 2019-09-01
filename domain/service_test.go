@@ -1,8 +1,6 @@
 package domain_test
 
 import (
-	"time"
-
 	"github.com/golang/mock/gomock"
 	"github.com/keitam913/textvid/domain"
 	. "github.com/onsi/ginkgo"
@@ -36,9 +34,8 @@ labels: [label-a, label-b]
 content
 `)
 				Expect(got).To(Equal(&domain.Post{
-					Filename:  "20190101-post.md",
-					Timestamp: GetTimestamp("2019-01-01T00:00:00Z"),
-					Title:     "Title",
+					Filename: "20190101-post.md",
+					Title:    "Title",
 					Body: `
 content
 `,
@@ -48,11 +45,3 @@ content
 		})
 	})
 })
-
-func GetTimestamp(text string) time.Time {
-	t, err := time.Parse(time.RFC3339, text)
-	if err != nil {
-		panic(err)
-	}
-	return t
-}

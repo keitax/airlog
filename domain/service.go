@@ -14,10 +14,9 @@ func (ps *PostServiceImpl) ConvertToPost(filename, content string) *Post {
 	fm := file.ExtractFrontMatter()
 	h1 := file.ExtractH1()
 	post := &Post{
-		Filename:  filename,
-		Timestamp: file.GetTimestamp(),
-		Title:     h1,
-		Body:      file.Content,
+		Filename: filename,
+		Title:    h1,
+		Body:     file.Content,
 	}
 	if labels, ok := fm["labels"].([]interface{}); ok {
 		for _, label := range labels {

@@ -40,7 +40,7 @@ func (ps *ServiceImpl) Recent() ([]*domain.Post, error) {
 func (ps *ServiceImpl) PushPosts(event *domain.PushEvent) error {
 	fs, err := ps.PostFileRepository.ChangedFiles(event)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	for _, f := range fs {
 		if domain.IsPostFileName(f.Filename) {

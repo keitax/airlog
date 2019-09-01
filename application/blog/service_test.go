@@ -1,8 +1,6 @@
 package blog_test
 
 import (
-	"time"
-
 	"github.com/keitam913/textvid/application/blog"
 
 	"github.com/golang/mock/gomock"
@@ -105,9 +103,8 @@ labels: [label-a, label-b]
 
 content
 `).AnyTimes().Return(&domain.Post{
-						Filename:  "20190101-post.md",
-						Timestamp: GetTimestamp("2019-01-01T00:00:00Z"),
-						Title:     "Title",
+						Filename: "20190101-post.md",
+						Title:    "Title",
 						Body: `content
 `,
 						Labels: []string{"label-a", "label-b"},
@@ -116,9 +113,8 @@ content
 
 				It("puts a post from the file", func() {
 					mrepo.EXPECT().Put(&domain.Post{
-						Filename:  "20190101-post.md",
-						Timestamp: GetTimestamp("2019-01-01T00:00:00Z"),
-						Title:     "Title",
+						Filename: "20190101-post.md",
+						Title:    "Title",
 						Body: `content
 `,
 						Labels: []string{"label-a", "label-b"},
@@ -133,11 +129,3 @@ content
 		})
 	})
 })
-
-func GetTimestamp(text string) time.Time {
-	t, err := time.Parse(time.RFC3339, text)
-	if err != nil {
-		panic(err)
-	}
-	return t
-}
