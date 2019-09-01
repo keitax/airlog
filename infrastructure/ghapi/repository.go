@@ -3,16 +3,17 @@ package ghapi
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/keitam913/textvid/domain"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/keitam913/textvid/domain"
 )
 
 type PostFileRepository struct {
 	GitHubAPIPostRepositoryEndpoint string
 }
 
-func (pfRepo *PostFileRepository) ChangedFiles(event *domain.PushEvent) ([]*domain.File, error) {
+func (pfRepo *PostFileRepository) ChangedFiles(event *domain.PushEvent) ([]*domain.PostFile, error) {
 	res, err := http.Get(fmt.Sprintf("%s/compare/%s...%s", pfRepo.GitHubAPIPostRepositoryEndpoint, event.BeforeCommitID, event.AfterCommitID))
 	if err != nil {
 		return nil, err
@@ -24,7 +25,7 @@ func (pfRepo *PostFileRepository) ChangedFiles(event *domain.PushEvent) ([]*doma
 		return nil, err
 	}
 
-	var fs []*domain.File
+	var fs []*domain.PostFile
 	for _, f := range comp.Files {
 		res, err := http.Get(f.RawURL)
 		if err != nil {
@@ -37,9 +38,9 @@ func (pfRepo *PostFileRepository) ChangedFiles(event *domain.PushEvent) ([]*doma
 			return nil, err
 		}
 
-		fs = append(fs, &domain.File{
-			Path:    f.Filename,
-			Content: string(content),
+		fs = append(fs, &domain.PostFile{
+			Filename: f.Filename,
+			Content:  string(content),
 		})
 	}
 

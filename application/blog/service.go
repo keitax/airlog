@@ -15,8 +15,8 @@ type Service interface {
 }
 
 type ServiceImpl struct {
-	Service          domain.PostService
-	Repository       domain.PostRepository
+	Service            domain.PostService
+	Repository         domain.PostRepository
 	PostFileRepository domain.PostFileRepository
 }
 
@@ -43,8 +43,8 @@ func (ps *ServiceImpl) PushPosts(event *domain.PushEvent) error {
 		panic(err)
 	}
 	for _, f := range fs {
-		if domain.IsPostFileName(f.Path) {
-			post := ps.Service.ConvertToPost(f.Path, f.Content)
+		if domain.IsPostFileName(f.Filename) {
+			post := ps.Service.ConvertToPost(f.Filename, f.Content)
 			if err := ps.Repository.Put(post); err != nil {
 				return err
 			}

@@ -3,5 +3,5 @@
 package domain
 
 type PostFileRepository interface {
-	ChangedFiles(event *PushEvent) ([]*File, error)
+	ChangedFiles(event *PushEvent) ([]*PostFile, error)
 }

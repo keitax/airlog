@@ -2,12 +2,13 @@ package ghapi_test
 
 import (
 	"fmt"
+	"net/http"
+	"net/http/httptest"
+
 	"github.com/golang/mock/gomock"
 	"github.com/keitam913/textvid/domain"
 	"github.com/keitam913/textvid/infrastructure/ghapi"
 	. "github.com/onsi/gomega"
-	"net/http"
-	"net/http/httptest"
 
 	. "github.com/onsi/ginkgo"
 )
@@ -39,7 +40,7 @@ var _ = Describe("Repository", func() {
 	Describe("ChangedFiles()", func() {
 		var (
 			givenPushEvent *domain.PushEvent
-			gotFs          []*domain.File
+			gotFs          []*domain.PostFile
 			gotErr         error
 		)
 
@@ -79,8 +80,8 @@ var _ = Describe("Repository", func() {
 
 				It("responses the changed files", func() {
 					Expect(gotErr).NotTo(HaveOccurred())
-					Expect(gotFs).To(Equal([]*domain.File{
-						{Path: "20190101-post.md", Content: "post content"},
+					Expect(gotFs).To(Equal([]*domain.PostFile{
+						{Filename: "20190101-post.md", Content: "post content"},
 					}))
 				})
 			})

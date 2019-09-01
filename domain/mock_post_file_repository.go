@@ -33,9 +33,9 @@ func (m *MockPostFileRepository) EXPECT() *MockPostFileRepositoryMockRecorder {
 }
 
 // ChangedFiles mocks base method
-func (m *MockPostFileRepository) ChangedFiles(event *PushEvent) ([]*File, error) {
+func (m *MockPostFileRepository) ChangedFiles(event *PushEvent) ([]*PostFile, error) {
 	ret := m.ctrl.Call(m, "ChangedFiles", event)
-	ret0, _ := ret[0].([]*File)
+	ret0, _ := ret[0].([]*PostFile)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
