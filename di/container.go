@@ -1,9 +1,12 @@
 package di
 
 import (
-	"database/sql"
-
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	awsdynamodb "github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/keitam913/textvid/infrastructure/apigatewayproxy"
+	"github.com/keitam913/textvid/infrastructure/dynamodb"
 
 	"github.com/keitam913/textvid/application/blog"
 
@@ -12,7 +15,6 @@ import (
 	"github.com/keitam913/textvid/domain"
 	"github.com/keitam913/textvid/infrastructure/ghapi"
 	"github.com/keitam913/textvid/infrastructure/osenv"
-	"github.com/keitam913/textvid/infrastructure/rds"
 	"github.com/keitam913/textvid/infrastructure/web"
 )
 
@@ -54,9 +56,18 @@ func (c Container) PostService() domain.PostService {
 }
 
 func (c Container) PostRepository() domain.PostRepository {
-	return &rds.PostRepository{
-		DB: c.DB(),
+	return &dynamodb.PostRepository{
+		DB: c.DynamoDB(),
 	}
+}
+
+func (c Container) DynamoDB() *awsdynamodb.DynamoDB {
+	conf := c.Config()
+	return awsdynamodb.New(session.Must(session.NewSessionWithOptions(session.Options{
+		Config: aws.Config{
+			Credentials: credentials.NewStaticCredentials(conf.AWSAccessKeyID, conf.AWSSecretAccessKey, ""),
+		},
+	})))
 }
 
 func (c Container) ViewRepository() *web.ViewRepository {
@@ -70,14 +81,6 @@ func (c Container) PostFileRepository() domain.PostFileRepository {
 	return &ghapi.PostFileRepository{
 		GitHubAPIPostRepositoryEndpoint: c.Config().GitHubAPIPostRepositoryEndpoint,
 	}
-}
-
-func (c Container) DB() *sql.DB {
-	db, err := sql.Open("mysql", c.Config().BlogDSN)
-	if err != nil {
-		panic(err)
-	}
-	return db
 }
 
 func (c Container) Config() *osenv.Config {
