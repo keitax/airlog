@@ -3,6 +3,7 @@
 package blog
 
 import (
+	"sort"
 	"strings"
 
 	"github.com/keitam913/textvid/domain"
@@ -34,6 +35,9 @@ func (ps *ServiceImpl) Recent() ([]*domain.Post, error) {
 	if err != nil {
 		return nil, err
 	}
+	sort.Slice(recent, func(i, j int) bool {
+		return recent[i].Timestamp().After(recent[j].Timestamp())
+	})
 	return recent, nil
 }
 
