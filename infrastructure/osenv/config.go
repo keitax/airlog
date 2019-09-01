@@ -7,7 +7,6 @@ import (
 )
 
 type Config struct {
-	Port                            string
 	SiteTitle                       string
 	Footnote                        string
 	GitHubAPIPostRepositoryEndpoint string
@@ -20,7 +19,6 @@ func LoadConfig() (*Config, error) {
 		Field *string
 		Name  string
 	}{
-		{&conf.Port, "PORT"},
 		{&conf.SiteTitle, "TV_SITE_TITLE"},
 		{&conf.Footnote, "TV_FOOTNOTE"},
 		{&conf.GitHubAPIPostRepositoryEndpoint, "TV_GITHUB_API_POST_REPOSITORY_ENDPOINT"},

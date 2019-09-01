@@ -20,14 +20,13 @@ var _ = Describe("Config", func() {
 			It("occurs an error", func() {
 				conf, err := osenv.LoadConfig()
 				Expect(err).To(HaveOccurred())
-				Expect(err.Error()).To(ContainSubstring("missed env: PORT"))
+				Expect(err.Error()).To(ContainSubstring("missed env: TV_SITE_TITLE"))
 				Expect(conf).To(BeNil())
 			})
 		})
 
 		Context("with valid environment vars", func() {
 			env := map[string]string{
-				"PORT":                                   "3000",
 				"TV_SITE_TITLE":                          "Textvid",
 				"TV_FOOTNOTE":                            "footnote",
 				"TV_GITHUB_API_POST_REPOSITORY_ENDPOINT": "https://api.github.com/repos/user/posts",
@@ -49,7 +48,6 @@ var _ = Describe("Config", func() {
 				conf, err := osenv.LoadConfig()
 				Expect(err).NotTo(HaveOccurred())
 				Expect(conf).To(Equal(&osenv.Config{
-					Port:                            "3000",
 					SiteTitle:                       "Textvid",
 					Footnote:                        "footnote",
 					GitHubAPIPostRepositoryEndpoint: "https://api.github.com/repos/user/posts",
