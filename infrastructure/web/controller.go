@@ -46,4 +46,5 @@ func (whc *WebhookController) Post(ctx *gin.Context) {
 	if err := whc.Service.PushPosts(&ev); err != nil {
 		panic(err)
 	}
+	ctx.Status(http.StatusOK)
 }
