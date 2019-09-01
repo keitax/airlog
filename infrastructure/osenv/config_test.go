@@ -30,8 +30,6 @@ var _ = Describe("Config", func() {
 				"PORT":                                   "3000",
 				"TV_SITE_TITLE":                          "Textvid",
 				"TV_FOOTNOTE":                            "footnote",
-				"TV_AWS_ACCESS_KEY_ID":                   "<aws-access-key-id>",
-				"TV_AWS_SECRET_ACCESS_KEY":               "<aws-secret-access-key>",
 				"TV_GITHUB_API_POST_REPOSITORY_ENDPOINT": "https://api.github.com/repos/user/posts",
 			}
 
@@ -54,8 +52,6 @@ var _ = Describe("Config", func() {
 					Port:                            "3000",
 					SiteTitle:                       "Textvid",
 					Footnote:                        "footnote",
-					AWSAccessKeyID:                  "<aws-access-key-id>",
-					AWSSecretAccessKey:              "<aws-secret-access-key>",
 					GitHubAPIPostRepositoryEndpoint: "https://api.github.com/repos/user/posts",
 				}))
 			})
