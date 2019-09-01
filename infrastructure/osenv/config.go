@@ -10,7 +10,8 @@ type Config struct {
 	Port                            string
 	SiteTitle                       string
 	Footnote                        string
-	BlogDSN                         string
+	AWSAccessKeyID                  string
+	AWSSecretAccessKey              string
 	GitHubAPIPostRepositoryEndpoint string
 }
 
@@ -24,7 +25,8 @@ func LoadConfig() (*Config, error) {
 		{&conf.Port, "PORT"},
 		{&conf.SiteTitle, "TV_SITE_TITLE"},
 		{&conf.Footnote, "TV_FOOTNOTE"},
-		{&conf.BlogDSN, "TV_BLOG_DSN"},
+		{&conf.AWSAccessKeyID, "TV_AWS_ACCESS_KEY_ID"},
+		{&conf.AWSSecretAccessKey, "TV_AWS_SECRET_ACCESS_KEY"},
 		{&conf.GitHubAPIPostRepositoryEndpoint, "TV_GITHUB_API_POST_REPOSITORY_ENDPOINT"},
 	} {
 		v := os.Getenv(prop.Name)
