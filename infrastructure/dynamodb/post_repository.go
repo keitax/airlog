@@ -42,7 +42,7 @@ func (pr *PostRepository) All() ([]*domain.Post, error) {
 }
 
 func (pr *PostRepository) Put(post *domain.Post) error {
-	var labels []*dynamodb.AttributeValue
+	labels := []*dynamodb.AttributeValue{}
 	for _, l := range post.Labels {
 		labels = append(labels, &dynamodb.AttributeValue{S: aws.String(l)})
 	}
